@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "mrc-backend"
+version = "0.0.1"
+description = ""
+authors = ["Alban Tiberghien <atiberghien@numnprod.fr>"]
+readme = "README.md"
+packages = [{include = "mrc_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.1.7"
+django-extensions = "^3.2.1"
+python-decouple = "^3.8"
+dj-database-url = "^1.2.0"
+psycopg2-binary = "^2.9.5"
+django-cors-headers = "^3.14.0"
+django-rest-framework = "^0.1.0"
+django-allauth = "^0.52.0"
+djangorestframework-simplejwt = "^5.2.2"
+djangorestframework-camel-case = "^1.4.2"
+django-filter = "^22.1"
+drf-yasg = "^1.21.5"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

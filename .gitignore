@@ -1,0 +1,4 @@
+**/__pycache__
+/dj_rest_auth
+*.rest
+*.env
