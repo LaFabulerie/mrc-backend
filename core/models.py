@@ -26,7 +26,6 @@ class Item(models.Model):
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True)
     image = models.ImageField(upload_to='images', blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
     room = models.ForeignKey(Room, blank=True, null=True, on_delete=models.SET_NULL, related_name='items')
 
     def __str__(self):
@@ -44,7 +43,7 @@ class DigitalUse(models.Model):
     tags = TaggableManager(blank=True)
     
     def __str__(self):
-        return self.name
+        return self.title
     
     class Meta:
         verbose_name = 'Usage numérique'
@@ -63,7 +62,7 @@ class DigitalService(models.Model):
     zone = models.ForeignKey(Zone, blank=True, null=True, on_delete=models.SET_NULL, related_name='services')
     
     def __str__(self):
-        return self.name
+        return self.title
     
     class Meta:
         verbose_name = 'Service numérique'
@@ -74,9 +73,6 @@ class DigitalServiceContact(models.Model):
     address = models.CharField(max_length=500)
     phone = models.CharField(max_length=50)
     service = models.ForeignKey(DigitalService, on_delete=models.CASCADE, related_name='contacts')
-    
-    def __str__(self):
-        return self.name
     
     class Meta:
         verbose_name = 'Contact'
