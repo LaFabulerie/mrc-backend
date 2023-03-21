@@ -2,3 +2,5 @@
 /dj_rest_auth
 *.rest
 *.env
+/data/.~lock*
+/data/

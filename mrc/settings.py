@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     
     'django_filters',
+    "taggit",
      
     'org',
+    'core',
     
 ]
 
