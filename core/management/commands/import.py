@@ -40,4 +40,38 @@ class Command(BaseCommand):
                     use.items.add(item)
                     use.tags.add(*clean_tags)
                 
+        with open('data/services.csv') as f:
+            csv_reader = csv.reader(f, delimiter=',')
+            next(csv_reader)
+            for row in csv_reader:
+                room_name, item_name, use_name, zone_name, service_name, service_description, service_url = row
+                
+                if not room_name or not item_name or not use_name:
+                    continue
+                
+                try:
+                    room = Room.objects.get(name=room_name)
+                except:
+                    print(f"Room {room_name} does not exist")
+                    
+                try:
+                    item = Item.objects.get(name=item_name)
+                except:
+                    print(f"Item {item_name} does not exist")
+                    
+                try:
+                    use = DigitalUse.objects.get(title=use_name)
+                except:
+                    print(f"Use {use_name} does not exist")
+                 
+                if service_name:
+                    try:
+                        service = DigitalService.objects.get(title=service_name)
+                        service.uses.add(use)
+                    except DigitalService.DoesNotExist:
+                        service = DigitalService.objects.create(title=service_name, description=service_description, url=service_url)
+                        service.uses.add(use)
+                        if zone_name:
+                            service.zone = Zone.objects.get_or_create(name=zone_name)[0]
+                        service.save()
                 

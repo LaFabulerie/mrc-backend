@@ -4,11 +4,12 @@ from .models import *
 class DigitalServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = DigitalService
-        fields = "__all__"
-        # exclude = ('items',)
+        # fields = "__all__"
+        exclude = ('uses',)
 
 
 class DigitalUseSerializer(serializers.ModelSerializer):
+    services = DigitalServiceSerializer(many=True, read_only=True)
     class Meta:
         model = DigitalUse
         # fields = "__all__"

@@ -58,6 +58,7 @@ class DigitalService(models.Model):
     title = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='title', unique=True)
     description = models.TextField(blank=True, null=True)
+    url = models.URLField(blank=True, null=True)
     uses = models.ManyToManyField(DigitalUse, blank=True, related_name='services') 
     zone = models.ForeignKey(Zone, blank=True, null=True, on_delete=models.SET_NULL, related_name='services')
     
