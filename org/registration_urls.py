@@ -6,7 +6,7 @@ from dj_rest_auth.registration.views import RegisterView, VerifyEmailView, Resen
 from django.conf import settings
 
 def redirec_to_frontend_verify_email(request, key=None, *kwargs):
-    url = f"{settings.FRONTEND_URL}/verify-email/{key}"
+    url = f"{settings.FRONTEND_URL}/auth/verify-email/{key}"
     return HttpResponsePermanentRedirect(url)
 
 
