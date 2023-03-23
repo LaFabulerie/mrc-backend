@@ -6,8 +6,8 @@ class DigitalServiceSerializer(serializers.ModelSerializer):
         model = DigitalService
         # fields = "__all__"
         exclude = ('uses',)
-
-
+        
+        
 class DigitalUseSerializer(serializers.ModelSerializer):
     services = DigitalServiceSerializer(many=True, read_only=True)
     class Meta:
@@ -15,8 +15,16 @@ class DigitalUseSerializer(serializers.ModelSerializer):
         # fields = "__all__"
         exclude = ('items',)
 
+
+class NestedDigitalUseSerializer(serializers.ModelSerializer):
+    services = DigitalServiceSerializer(many=True, read_only=True)
+    class Meta:
+        model = DigitalUse
+        # fields = "__all__"
+        exclude = ('items',)
+
 class ItemSerializer(serializers.ModelSerializer):
-    uses = DigitalUseSerializer(many=True, read_only=True)
+    uses = NestedDigitalUseSerializer(many=True, read_only=True)
     
     class Meta:
         model = Item
