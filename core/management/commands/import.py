@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
 from core.models import *
-
+from taggit.models import Tag
 import csv
 
 class Command(BaseCommand):
@@ -11,6 +11,8 @@ class Command(BaseCommand):
     #     parser.add_argument('sample', nargs='+')
 
     def handle(self, *args, **options):
+        Tag.objects.all().delete()
+        
         with open('data/usages.csv') as f:
             csv_reader = csv.reader(f, delimiter=',')
             next(csv_reader)
@@ -27,7 +29,7 @@ class Command(BaseCommand):
                 except Item.DoesNotExist:
                     item = Item.objects.create(name=item_name, room=room)
                 
-                clean_tags = tags.replace('#', '').split('\n')
+                clean_tags = tags.replace('#', '').replace(' ', '').lower().split('\n')
                 
                 try:
                     use = DigitalUse.objects.get(title=use_name)
