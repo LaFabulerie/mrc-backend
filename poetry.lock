@@ -477,6 +477,17 @@ python-jose = ["python-jose (==3.3.0)"]
 test = ["cryptography", "pytest", "pytest-cov", "pytest-django", "pytest-xdist", "tox"]
 
 [[package]]
+name = "drf-flex-fields"
+version = "1.0.2"
+description = "Flexible, dynamic fields and nested resources for Django REST Framework serializers."
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "drf-flex-fields-1.0.2.tar.gz", hash = "sha256:48139eeff0b1232fc05a9f353c3c2b570b225985043dedda6ab0d5e8b7a1d7af"},
+]
+
+[[package]]
 name = "drf-yasg"
 version = "1.21.5"
 description = "Automated generation of real Swagger/OpenAPI 2.0 schemas from Django Rest Framework code."
@@ -1055,4 +1066,4 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "97f2338eb20840083233da3c324388549e095aa8e6289ae20a895cfa48aa3cd7"
+content-hash = "e6bd5a38bab21cbf4ae7dcfab3b8bed50d5a695d10f84097243c1e7ec9d69de2"
