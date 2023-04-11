@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth.socialaccount',
     'dj_rest_auth.registration',
     
     'django_filters',
@@ -120,6 +120,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ),
+    "DEFAULT_PERMISSION_CLASSES": [
+        'rest_framework.permissions.IsAuthenticated'
+        # "rest_framework_api_key.permissions.HasAPIKey",
+    ],
     'DEFAULT_RENDERER_CLASSES': (
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
         'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
@@ -134,8 +138,8 @@ REST_FRAMEWORK = {
 
 REST_AUTH = {
     'USE_JWT': True,
-    'JWT_AUTH_COOKIE': 'mrc-auth',
-    'JWT_AUTH_REFRESH_COOKIE': 'mrc-refresh-token',
+    'JWT_AUTH_HTTPONLY' : False,
+    'LOGIN_SERIALIZER' : 'org.serializers.LoginSerializer',
     'REGISTER_SERIALIZER': 'org.serializers.RegisterSerializer',
     'PASSWORD_RESET_SERIALIZER': 'org.serializers.PasswordResetSerializer',
     'PASSWORD_RESET_USE_SITES_DOMAIN': False,

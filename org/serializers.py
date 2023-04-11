@@ -1,12 +1,19 @@
+from pickletools import read_long1
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer as BaseRegisterSerializer
 from dj_rest_auth.serializers import PasswordResetSerializer as BasePasswordResetSerializer
+from dj_rest_auth.serializers import LoginSerializer as BaseLoginSerializer
 from dj_rest_auth.serializers import AllAuthPasswordResetForm
 from allauth.account.forms import default_token_generator
 from allauth.account.utils import user_pk_to_url_str
 from allauth.account.adapter import get_adapter
 from django.urls import reverse
 from django.conf import settings
+
+
+class LoginSerializer(BaseLoginSerializer):
+    first_name = serializers.CharField(read_only=True)
+    last_name = serializers.CharField(read_only=True)
 
 class RegisterSerializer(BaseRegisterSerializer):
     first_name = serializers.CharField(required=True)
@@ -18,7 +25,6 @@ class RegisterSerializer(BaseRegisterSerializer):
             'first_name': self.validated_data.get('first_name'),
             'last_name': self.validated_data.get('last_name')
         })
-        print(data)
         return data
 
 class PasswordResetForm(AllAuthPasswordResetForm):
