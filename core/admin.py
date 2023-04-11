@@ -28,7 +28,6 @@ class DigitalServiceContactInline(admin.TabularInline):
 class DigitalServiceAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
-    filter_horizontal = ('uses',)
     inlines = [DigitalServiceContactInline]
 
 

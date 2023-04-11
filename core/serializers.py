@@ -10,12 +10,13 @@ class ZoneSerializer(FlexFieldsModelSerializer):
 
 
 class DigitalServiceSerializer(FlexFieldsModelSerializer):
+    use_id = serializers.PrimaryKeyRelatedField(write_only=False, queryset=DigitalUse.objects.all(), source='use')
+    
     class Meta:
         model = DigitalService
         fields = "__all__"
         expandable_fields = {
-            'uses': ('core.DigitalUseSerializer', {'many': True, 'read_only':True}),
-            'zone': ZoneSerializer,
+            'use': ('core.DigitalUseSerializer', {'read_only':True}),
         }
               
 

@@ -2,7 +2,7 @@ from rest_framework import viewsets, mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Room, DigitalUse, DigitalService
-from .serializers import RoomSerializer, DigitalUseSerializer
+from .serializers import RoomSerializer, DigitalUseSerializer, DigitalServiceSerializer
 from taggit.models import Tag
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Room.objects.all()
@@ -13,8 +13,9 @@ class DigitalUseViewSet(viewsets.ModelViewSet):
     queryset = DigitalUse.objects.all()
     serializer_class = DigitalUseSerializer
 
-class DigitalServiceViewSet(viewsets.GenericViewSet, mixins.DestroyModelMixin):
+class DigitalServiceViewSet(viewsets.ModelViewSet):
     queryset = DigitalService.objects.all()
+    serializer_class = DigitalServiceSerializer
     
 class TagApiView(APIView):
     

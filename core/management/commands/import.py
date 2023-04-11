@@ -67,13 +67,10 @@ class Command(BaseCommand):
                     print(f"Use {use_name} does not exist")
                  
                 if service_name:
-                    try:
-                        service = DigitalService.objects.get(title=service_name)
-                        service.uses.add(use)
-                    except DigitalService.DoesNotExist:
-                        service = DigitalService.objects.create(title=service_name, description=service_description, url=service_url)
-                        service.uses.add(use)
-                        if zone_name:
-                            service.zone = Zone.objects.get_or_create(name=zone_name)[0]
-                        service.save()
+                    service = DigitalService.objects.get_or_create(title=service_name)[0]
+                    service.description = service_description
+                    service.url = service_url
+                    service.use = use
+                    service.zone = Zone.objects.get_or_create(name=zone_name)[0]
+                    service.save()
                 
