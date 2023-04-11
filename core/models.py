@@ -50,8 +50,12 @@ class DigitalUse(models.Model):
         verbose_name_plural = 'Usages numériques'   
     
 
-class Zone(models.Model):
+class Area(models.Model):
     name = models.CharField(max_length=255)
+    
+    class Meta:
+        verbose_name = 'Zone d\'activité'
+        verbose_name_plural = 'Zones d\'activité'
     
 
 class DigitalService(models.Model):
@@ -59,7 +63,7 @@ class DigitalService(models.Model):
     slug = AutoSlugField(populate_from='title', unique=True)
     description = models.TextField(blank=True, null=True)
     url = models.URLField(blank=True, null=True)
-    zone = models.ForeignKey(Zone, blank=True, null=True, on_delete=models.SET_NULL, related_name='services')
+    area = models.ForeignKey(Area, blank=True, null=True, on_delete=models.SET_NULL, related_name='services')
     use = models.ForeignKey(DigitalUse, blank=True, null=True, on_delete=models.CASCADE, related_name='services')
     
     def __str__(self):

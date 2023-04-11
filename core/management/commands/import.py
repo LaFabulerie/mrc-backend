@@ -46,7 +46,7 @@ class Command(BaseCommand):
             csv_reader = csv.reader(f, delimiter=',')
             next(csv_reader)
             for row in csv_reader:
-                room_name, item_name, use_name, zone_name, service_name, service_description, service_url = row
+                room_name, item_name, use_name, area_name, service_name, service_description, service_url = row
                 
                 if not room_name or not item_name or not use_name:
                     continue
@@ -71,6 +71,6 @@ class Command(BaseCommand):
                     service.description = service_description
                     service.url = service_url
                     service.use = use
-                    service.zone = Zone.objects.get_or_create(name=zone_name)[0]
+                    service.area = Area.objects.get_or_create(name=area_name)[0]
                     service.save()
                 

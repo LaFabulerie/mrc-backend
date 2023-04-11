@@ -31,7 +31,7 @@ class DigitalServiceAdmin(admin.ModelAdmin):
     inlines = [DigitalServiceContactInline]
 
 
-@admin.register(Zone)
-class ZoneAdmin(admin.ModelAdmin):
+@admin.register(Area)
+class AreaAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)

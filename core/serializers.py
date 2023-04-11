@@ -3,9 +3,9 @@ from taggit.serializers import (TagListSerializerField, TaggitSerializer)
 from rest_flex_fields import FlexFieldsModelSerializer
 from .models import *
 
-class ZoneSerializer(FlexFieldsModelSerializer):
+class AreaSerializer(FlexFieldsModelSerializer):
     class Meta:
-        model = Zone
+        model = Area
         fields = "__all__"
 
 
