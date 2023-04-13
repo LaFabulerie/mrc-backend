@@ -12,6 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         Tag.objects.all().delete()
+        DigitalService.objects.all().delete()
         
         with open('data/usages.csv') as f:
             csv_reader = csv.reader(f, delimiter=',')
@@ -67,10 +68,9 @@ class Command(BaseCommand):
                     print(f"Use {use_name} does not exist")
                  
                 if service_name:
-                    service = DigitalService.objects.get_or_create(title=service_name)[0]
+                    service = DigitalService.objects.get_or_create(title=service_name, use=use)[0]
                     service.description = service_description
                     service.url = service_url
-                    service.use = use
                     service.area = Area.objects.get_or_create(name=area_name)[0]
                     service.save()
                 

@@ -1,8 +1,8 @@
 from rest_framework import viewsets, mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Room, DigitalUse, DigitalService
-from .serializers import RoomSerializer, DigitalUseSerializer, DigitalServiceSerializer
+from .models import Room, DigitalUse, DigitalService, Area
+from .serializers import RoomSerializer, DigitalUseSerializer, DigitalServiceSerializer, AreaSerializer
 from taggit.models import Tag
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Room.objects.all()
@@ -22,4 +22,7 @@ class TagApiView(APIView):
     def get(self, request, format=None):
         tags = Tag.objects.exclude(name="").values_list('name', flat=True)
         return Response(tags)
-    
+
+class AreaViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Area.objects.all()
+    serializer_class = AreaSerializer
