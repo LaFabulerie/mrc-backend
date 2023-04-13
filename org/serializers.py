@@ -1,7 +1,7 @@
 from pickletools import read_long1
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer as BaseRegisterSerializer
-from dj_rest_auth.serializers import PasswordResetSerializer as BasePasswordResetSerializer
+from dj_rest_auth.serializers import PasswordResetSerializer as BasePasswordResetSerializer, UserDetailsSerializer
 from dj_rest_auth.serializers import LoginSerializer as BaseLoginSerializer
 from dj_rest_auth.serializers import AllAuthPasswordResetForm
 from allauth.account.forms import default_token_generator
@@ -48,3 +48,10 @@ class PasswordResetSerializer(BasePasswordResetSerializer):
     @property
     def password_reset_form_class(self):
         return PasswordResetForm
+
+
+class UserSerializer(UserDetailsSerializer):
+    is_superuser = serializers.BooleanField(read_only=True)
+
+    class Meta(UserDetailsSerializer.Meta):
+        fields = UserDetailsSerializer.Meta.fields + ('is_superuser',)

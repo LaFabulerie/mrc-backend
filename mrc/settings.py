@@ -142,6 +142,7 @@ REST_AUTH = {
     'LOGIN_SERIALIZER' : 'org.serializers.LoginSerializer',
     'REGISTER_SERIALIZER': 'org.serializers.RegisterSerializer',
     'PASSWORD_RESET_SERIALIZER': 'org.serializers.PasswordResetSerializer',
+    'USER_DETAILS_SERIALIZER': 'org.serializers.UserSerializer',
     'PASSWORD_RESET_USE_SITES_DOMAIN': False,
 }
 
