@@ -441,6 +441,18 @@ django = ">=3.0"
 pytz = "*"
 
 [[package]]
+name = "djangorestframework-api-key"
+version = "2.3.0"
+description = "API key permissions for the Django REST Framework"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "djangorestframework-api-key-2.3.0.tar.gz", hash = "sha256:c2fa61280069acd8dc0e9dd1840e0e1934a2a85631069326f4d1e3a91ca9aa9a"},
+    {file = "djangorestframework_api_key-2.3.0-py3-none-any.whl", hash = "sha256:eed94f383e96ca8f9f9e4182406fe28b5585629d0039f65cbb7e6e254778f674"},
+]
+
+[[package]]
 name = "djangorestframework-camel-case"
 version = "1.4.2"
 description = "Camel case JSON support for Django REST framework."
@@ -1066,4 +1078,4 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "e6bd5a38bab21cbf4ae7dcfab3b8bed50d5a695d10f84097243c1e7ec9d69de2"
+content-hash = "ca87a79e7e128c136d697d0ac9c2ba697058a79b813f5c98095cca182e453909"

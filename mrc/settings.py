@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     
     'drf_yasg',
     'rest_framework',
+    'rest_framework_api_key',
     'rest_framework.authtoken',
     'dj_rest_auth',
     'allauth',
@@ -118,7 +119,7 @@ REST_FRAMEWORK = {
         'no_underscore_before_number': True,
     },
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     "DEFAULT_PERMISSION_CLASSES": [
         'rest_framework.permissions.IsAuthenticated'
@@ -160,3 +161,5 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = 'org.User'

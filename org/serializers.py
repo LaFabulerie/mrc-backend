@@ -1,15 +1,18 @@
-from pickletools import read_long1
 from rest_framework import serializers
 from dj_rest_auth.registration.serializers import RegisterSerializer as BaseRegisterSerializer
 from dj_rest_auth.serializers import PasswordResetSerializer as BasePasswordResetSerializer, UserDetailsSerializer
 from dj_rest_auth.serializers import LoginSerializer as BaseLoginSerializer
 from dj_rest_auth.serializers import AllAuthPasswordResetForm
 from allauth.account.forms import default_token_generator
+from rest_flex_fields import FlexFieldsModelSerializer
 from allauth.account.utils import user_pk_to_url_str
 from allauth.account.adapter import get_adapter
-from django.urls import reverse
-from django.conf import settings
 
+from django.conf import settings
+from core.serializers import AreaSerializer
+from core.models import Area
+from .models import Organization, OrganizationAPIKey
+from django.utils import timezone
 
 class LoginSerializer(BaseLoginSerializer):
     first_name = serializers.CharField(read_only=True)
@@ -50,8 +53,37 @@ class PasswordResetSerializer(BasePasswordResetSerializer):
         return PasswordResetForm
 
 
+class APIKeySerializer(FlexFieldsModelSerializer):
+    created_by = serializers.SerializerMethodField()
+    created_at = serializers.SerializerMethodField()
+
+    def get_created_at(self, obj):
+        date = timezone.localtime(obj.created)
+        return date.strftime("%d/%m/%Y %Hh%M")
+
+    def get_created_by(self, obj):
+        return obj.created_by.get_full_name() if obj.created_by else ''
+    class Meta:
+        model = OrganizationAPIKey
+        exclude = ('expiry_date', 'hashed_key',)
+
+class OrganizationSerializer(FlexFieldsModelSerializer):
+    area = AreaSerializer(read_only=True)
+    area_id = serializers.PrimaryKeyRelatedField(write_only=False, queryset=Area.objects.all(), source='area')
+
+
+    class Meta:
+        model = Organization
+        fields = "__all__"
+        expandable_fields = {
+            'members' : ('org.UserSerializer', {'many': True, 'read_only':True}),
+            'api_keys': (APIKeySerializer, {'many': True, 'read_only':True}),
+        }
+
 class UserSerializer(UserDetailsSerializer):
     is_superuser = serializers.BooleanField(read_only=True)
+    org = OrganizationSerializer(read_only=True, source="organization")
+    org_id = serializers.PrimaryKeyRelatedField(write_only=False, allow_null=True, queryset=Organization.objects.all(), source='organization')
 
     class Meta(UserDetailsSerializer.Meta):
-        fields = UserDetailsSerializer.Meta.fields + ('is_superuser',)
+        fields = UserDetailsSerializer.Meta.fields + ('is_superuser', 'org', 'org_id', 'id')

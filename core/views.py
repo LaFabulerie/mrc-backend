@@ -23,6 +23,6 @@ class TagApiView(APIView):
         tags = Tag.objects.exclude(name="").values_list('name', flat=True)
         return Response(tags)
 
-class AreaViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class AreaViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
