@@ -1,7 +1,7 @@
 **/__pycache__
 /dj_rest_auth
 *.rest
-*.env
+*.env*
 /data/.~lock*
 /data/
-/db/db.sqlite3
+/db/*

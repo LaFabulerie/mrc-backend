@@ -1,25 +1,24 @@
 from pathlib import Path
-from decouple import config
-from dj_database_url import parse as dj_url
+import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
+env = environ.Env()
+env.read_env(env.str('ENV_PATH', '.env'))
 
-DEBUG = config('DEBUG', default=False, cast=bool)
+print(f"\n{10*'*'} ENVIRONMENT : {env.str('ENV_NAME')} {10*'*'}\n")
+
+SECRET_KEY = env('SECRET_KEY')
+
+DEBUG = env.bool('DEBUG')
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ["*"]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://0.0.0.0:4200",
-    "http://localhost:4200",
-]
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
 CORS_ALLOW_CREDENTIALS = True
 
-FRONTEND_URL = config('FRONTEND_URL', default='http://localhost:4200')
+FRONTEND_URL = env.str('FRONTEND_URL', default='http://localhost:4200')
 
 
 INSTALLED_APPS = [
@@ -41,7 +40,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'allauth',
     'allauth.account',
-    # 'allauth.socialaccount',
+    'allauth.socialaccount',
     'dj_rest_auth.registration',
     
     'django_filters',
@@ -91,11 +90,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "mrc.wsgi.application"
 
 DATABASES = {
-    'default': config(
-        'DATABASE_URL',
-        default=f"sqlite:///{BASE_DIR}/db/db.sqlite3",
-        cast=dj_url
-    )
+    'default': env.db_url('DATABASE_URL')
 }
 
 
@@ -148,7 +143,7 @@ REST_AUTH = {
 }
 
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = env.str('ACCOUNT_EMAIL_VERIFICATION', default='mandatory') 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
