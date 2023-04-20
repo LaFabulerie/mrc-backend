@@ -1,11 +1,12 @@
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .serializers import OrganizationSerializer, UserSerializer
 from .models import Organization, OrganizationAPIKey
 from rest_framework.permissions import IsAuthenticated
 from .permissions import HasOrganizationAPIKey
+from rest_framework_api_key.permissions import KeyParser
 
 User = get_user_model()
 
@@ -31,6 +32,17 @@ class OrganizationViewSet(viewsets.ModelViewSet):
             key, key_value = OrganizationAPIKey.objects.create_key(name='youpi', organization=self.get_object(), created_by=request.user)
             return Response({'key': key_value}, status=201)
         return Response(status=403)
+
+    @action(detail=False, methods=['get'])
+    def me(self, request):
+        key = KeyParser().get(request)
+        if key:
+            org_key = OrganizationAPIKey.objects.get_from_key(key)
+            return Response(OrganizationSerializer(org_key.organization).data, status=status.HTTP_200_OK)
+        return Response({}, status=status.HTTP_404_NOT_FOUND)
+
+
+    
 
 
 class UserViewSet(viewsets.GenericViewSet, mixins.UpdateModelMixin):
