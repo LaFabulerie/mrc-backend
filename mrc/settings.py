@@ -157,3 +157,5 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'org.User'
+
+CLIENT_MODE = env.bool('CLIENT_MODE', default=False)
