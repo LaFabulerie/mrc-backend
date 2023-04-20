@@ -4,17 +4,19 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from .serializers import OrganizationSerializer, UserSerializer
 from .models import Organization, OrganizationAPIKey
+from rest_framework.permissions import IsAuthenticated
+from .permissions import HasOrganizationAPIKey
 
 User = get_user_model()
 
 class OrganizationViewSet(viewsets.ModelViewSet):
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
+    permission_classes = [IsAuthenticated | HasOrganizationAPIKey]
 
     @action(detail=True, methods=['delete'])
     def revoke_key(self, request, pk=None):
         key_id = request.GET.get('key', None)
-        print(key_id)
         key = self.get_object().api_keys.filter(id=key_id).first()
         if(key is not None and self.get_object().members.filter(id=request.user.id).exists()):
             key.revoked = True
