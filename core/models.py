@@ -1,6 +1,7 @@
 from django.db import models
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
+import uuid
 
 def room_video_path(instance, filename):
     return f"{instance.slug}/videos/{filename}"
@@ -52,7 +53,11 @@ class DigitalUse(models.Model):
 
 class Area(models.Model):
     name = models.CharField(max_length=255)
+    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
     
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = 'Zone d\'activité'
         verbose_name_plural = 'Zones d\'activité'

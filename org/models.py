@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from rest_framework_api_key.models import AbstractAPIKey
 
 from core.models import Area
-
+import uuid
 
 class User(AbstractUser):
     organization = models.ForeignKey('Organization', on_delete=models.SET_NULL, null=True, blank=True, related_name='members')
@@ -11,6 +11,7 @@ class User(AbstractUser):
 
 class Organization(models.Model):
     name = models.CharField(max_length=128)
+    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
     area = models.ForeignKey(Area, null=True, blank=True, on_delete=models.SET_NULL, related_name="organizations")
 
     def __str__(self):
