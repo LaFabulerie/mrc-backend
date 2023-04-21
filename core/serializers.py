@@ -27,7 +27,7 @@ class DigitalUseSerializer(TaggitSerializer, FlexFieldsModelSerializer):
     item_ids = serializers.PrimaryKeyRelatedField(many=True, read_only=False, queryset=Item.objects.all(), source='items')
     class Meta:
         model = DigitalUse
-        fields = ('id', 'title', 'slug', 'description', 'services', 'items', 'tags', 'item_ids')
+        fields = ('id', 'title', 'slug', 'description', 'services', 'items', 'tags', 'item_ids', 'uuid')
         expandable_fields = {
             'services': (DigitalServiceSerializer, {'many': True, 'read_only':True}),
             'items': ('core.ItemSerializer', {'many': True, 'read_only':True}),
@@ -48,7 +48,7 @@ class RoomSerializer(FlexFieldsModelSerializer):
     
     class Meta:
         model = Room
-        fields = ('id', 'name', 'slug', 'description', 'video', 'items')
+        fields = ('id', 'name', 'slug', 'description', 'video', 'items', 'uuid')
         expandable_fields = {
             'items': (ItemSerializer, {'many': True, 'read_only':True}), 
         }

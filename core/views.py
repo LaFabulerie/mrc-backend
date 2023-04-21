@@ -4,12 +4,13 @@ from rest_framework.response import Response
 from .models import Room, DigitalUse, DigitalService, Area
 from .serializers import RoomSerializer, DigitalUseSerializer, DigitalServiceSerializer, AreaSerializer
 from taggit.models import Tag
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from org.permissions import HasOrganizationAPIKey
 
 class RoomViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    permission_classes = [AllowAny]
 
 
 class DigitalUseViewSet(viewsets.ModelViewSet):

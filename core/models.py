@@ -7,6 +7,7 @@ def room_video_path(instance, filename):
     return f"{instance.slug}/videos/{filename}"
 
 class Room(models.Model):
+    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True)
     description = models.TextField(blank=True, null=True)
@@ -24,6 +25,7 @@ def item_image_path(instance, filename):
 
 
 class Item(models.Model):
+    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True)
     image = models.ImageField(upload_to='images', blank=True, null=True)
@@ -37,6 +39,7 @@ class Item(models.Model):
 
 
 class DigitalUse(models.Model):
+    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
     title = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='title', unique=True)
     description = models.TextField(blank=True, null=True)
@@ -52,8 +55,8 @@ class DigitalUse(models.Model):
     
 
 class Area(models.Model):
-    name = models.CharField(max_length=255)
     uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
+    name = models.CharField(max_length=255)
     
     def __str__(self):
         return self.name
@@ -64,6 +67,7 @@ class Area(models.Model):
     
 
 class DigitalService(models.Model):
+    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
     title = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='title', unique=True)
     description = models.TextField(blank=True, null=True)

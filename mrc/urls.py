@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/auth/signup/', include('org.registration_urls')),
     path('api/', include('core.urls')),
     path('api/', include('org.urls')),
+    path('api/client/', include('client.urls')),
     
     re_path(r'^api/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^api/redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
