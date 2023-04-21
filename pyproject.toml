@@ -4,7 +4,6 @@ version = "0.0.1"
 description = ""
 authors = ["Alban Tiberghien <atiberghien@numnprod.fr>"]
 readme = "README.md"
-packages = [{include = "mrc_backend"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
