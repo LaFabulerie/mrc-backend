@@ -9,7 +9,6 @@ readme = "README.md"
 python = "^3.10"
 Django = "^4.1.7"
 django-extensions = "^3.2.1"
-psycopg2-binary = "^2.9.5"
 django-cors-headers = "^3.14.0"
 django-rest-framework = "^0.1.0"
 django-allauth = "^0.52.0"
@@ -23,6 +22,7 @@ pillow = "^9.4.0"
 drf-flex-fields = "^1.0.2"
 djangorestframework-api-key = "^2.3.0"
 django-environ = "^0.10.0"
+dj-rest-auth = "^3.0.0"
 
 
 
