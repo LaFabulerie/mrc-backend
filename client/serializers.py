@@ -16,3 +16,4 @@ class RemoteAccessSerializer(FlexFieldsModelSerializer):
             'org' : (OrganizationSerializer, {'read_only': True}),
             'area' : (AreaSerializer, {'read_only': True}),
         }
+

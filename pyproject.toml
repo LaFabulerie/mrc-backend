@@ -23,6 +23,7 @@ drf-flex-fields = "^1.0.2"
 djangorestframework-api-key = "^2.3.0"
 django-environ = "^0.10.0"
 dj-rest-auth = "^3.0.0"
+paho-mqtt = "^1.6.1"
 
 
 

@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 env.read_env(env.str('ENV_PATH', '.env'))
 
-print(f"\n{10*'*'} ENVIRONMENT : {env.str('ENV_NAME')} {10*'*'}\n")
+ENV_NAME = env.str('ENV_NAME')
 
 SECRET_KEY = env('SECRET_KEY')
 
@@ -160,3 +160,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'org.User'
 
 CLIENT_MODE = env.bool('CLIENT_MODE', default=False)
+
+if CLIENT_MODE:
+    RASP_SERVER = env.str('RASP_SERVER')

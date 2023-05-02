@@ -2,6 +2,11 @@ from django.contrib import admin
 from .models import *
 
 
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('uuid', 'name', 'room')
+    list_filter = ('room',)
+
 class ItemInline(admin.TabularInline):
     model = Item
     extra = 0

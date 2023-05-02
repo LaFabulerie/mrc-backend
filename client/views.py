@@ -1,8 +1,8 @@
-from coreapi import Object
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny
 
 from org.models import Organization
 from .serializers import RemoteAccessSerializer
@@ -49,7 +49,6 @@ class RemoteAccessViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def synchronize(self, request, pk=None):
-        from pprint import pprint
         remote_access = self.get_object()
         params = "expand=items,items.room,services,services.area&omit=slug,id,items.slug,items.id,items.room.items,items.room.id,items.room.slug,services.id,services.slug,services.use"
         resp = requests.get(f"{remote_access.server_url}/api/digital-uses/?{params}", headers={'Authorization': 'Api-Key ' + remote_access.api_key})
@@ -96,6 +95,15 @@ class RemoteAccessViewSet(viewsets.ModelViewSet):
                         )
             return Response({'msg' : 'Synchronisation effectuée avec succés.'}, status=status.HTTP_200_OK)
         
-        
 
         return Response({'msg' : 'Une erreur est survenue lors de la synchronisation.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+
+
+class MqttViewSet(viewsets.GenericViewSet):
+    permission_classes = [AllowAny]
+    
+    @action(detail=False, methods=['post'])
+    def publish(self, request):
+        from .mqtt import client as mqtt_client
+        mqtt_client.publish(**request.data)
+        return Response(status=status.HTTP_200_OK)
