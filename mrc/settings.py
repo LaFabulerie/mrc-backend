@@ -161,5 +161,4 @@ AUTH_USER_MODEL = 'org.User'
 
 CLIENT_MODE = env.bool('CLIENT_MODE', default=False)
 
-if CLIENT_MODE:
-    RASP_SERVER = env.str('RASP_SERVER')
+RASP_SERVER = env.str('RASP_SERVER', default=None)
