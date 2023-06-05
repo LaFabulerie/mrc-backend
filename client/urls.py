@@ -10,6 +10,9 @@ router.register(r'mqtt', MqttViewSet, basename='mqtt')
 urlpatterns = router.urls
 
 
-if settings.CLIENT_MODE:
+if settings.CLIENT_MODE and settings.MQTT_BROKER:
     from . import mqtt
+    print(f"Connecting to mqtt broker at {settings.MQTT_BROKER}")
     mqtt.client.loop_start()
+else:
+    print("No mqtt broker configured")

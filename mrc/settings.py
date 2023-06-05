@@ -164,4 +164,4 @@ AUTH_USER_MODEL = 'org.User'
 
 CLIENT_MODE = env.bool('CLIENT_MODE', default=False)
 
-RASP_SERVER = env.str('RASP_SERVER', default=None)
+MQTT_BROKER = env.str('MQTT_BROKER', default=None)
