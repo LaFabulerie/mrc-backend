@@ -13,7 +13,7 @@ class ItemInline(admin.TabularInline):
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'uuid')
     search_fields = ('name',)
     inlines = [ItemInline]
     
