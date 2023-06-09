@@ -1,13 +1,17 @@
 from rest_framework import routers
-from .views import RoomViewSet, DigitalUseViewSet, TagApiView, DigitalServiceViewSet, AreaViewSet
+from .views import *
 from django.urls import path
 
 router = routers.SimpleRouter()
-router.register(r'rooms', RoomViewSet, basename='rooms')
-router.register(r'digital-uses', DigitalUseViewSet, basename='digital-uses')
-router.register(r'digital-services', DigitalServiceViewSet, basename='digital-services')
-router.register(r'areas', AreaViewSet, basename='areas')
+router.register(r'r/rooms', RoomReadOnlyViewSet, basename='ro-rooms')
+router.register(r'r/digital-uses', DigitalUseReadOnlyViewSet, basename='ro-digital-uses')
+router.register(r'r/digital-services', DigitalServiceReadOnlyViewSet, basename='ro-digital-services')
+router.register(r'r/items', ItemReadOnlyViewSet, basename='ro-items')
+
+router.register(r'w/digital-uses', DigitalUseWriteViewSet, basename='w-digital-uses')
+router.register(r'w/digital-services', DigitalServiceWriteViewSet, basename='w-digital-services')
+router.register(r'w/areas', AreaWriteViewSet, basename='w-areas')
 
 urlpatterns = router.urls + [
-    path('tags/', TagApiView.as_view(), name='tags'),
+    path('r/tags/', TagApiView.as_view(), name='r-tags'),
 ]
