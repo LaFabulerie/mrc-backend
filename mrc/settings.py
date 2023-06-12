@@ -163,6 +163,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'org.User'
 
-CLIENT_MODE = env.bool('CLIENT_MODE', default=False)
-
+MODE = env.str('MODE', default='WEB')
 MQTT_BROKER = env.str('MQTT_BROKER', default=None)

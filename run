@@ -1,16 +1,11 @@
 #!/usr/bin/zsh
 
 case $1 in
-
-  server)
-     ./manage.py runserver 0.0.0.0:8000
-     ;;
-
-  client)
-     ENV_PATH=.env.client ./manage.py runserver 0.0.0.0:8001
+  standalone)
+     ENV_PATH=.env.standalone ./manage.py runserver 0.0.0.0:8000
      ;;
   
   *)
-    echo "Must be server or client"
+    ENV_PATH=.env.web ./manage.py runserver 0.0.0.0:8000
     ;;
 esac
