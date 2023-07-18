@@ -10,6 +10,7 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     permission_classes = [HasOrganizationAPIKey]
+    lookup_field = 'uuid'
 
 class ItemReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = Item.objects.all()
