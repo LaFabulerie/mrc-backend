@@ -29,7 +29,7 @@ class Item(models.Model):
     uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
     name = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True)
-    image = models.ImageField(upload_to='images', blank=True, null=True)
+    image = models.FileField(upload_to='images', blank=True, null=True)
     room = models.ForeignKey(Room, blank=True, null=True, on_delete=models.SET_NULL, related_name='items')
 
     def __str__(self):
