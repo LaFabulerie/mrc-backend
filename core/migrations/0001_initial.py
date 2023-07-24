@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 (
                     "video",
                     models.FileField(
-                        blank=True, null=True, upload_to=core.models.room_video_path
+                        blank=True, null=True
                     ),
                 ),
             ],
@@ -121,7 +121,7 @@ class Migration(migrations.Migration):
                         editable=False, populate_from="name", unique=True
                     ),
                 ),
-                ("image", models.ImageField(blank=True, null=True, upload_to="images")),
+                ("image", models.ImageField(blank=True, null=True)),
                 (
                     "room",
                     models.ForeignKey(

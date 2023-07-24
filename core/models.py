@@ -1,42 +1,50 @@
 from django.db import models
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 import uuid
 
-def room_video_path(instance, filename):
-    return f"{instance.slug}/videos/{filename}"
-
 class Room(models.Model):
     uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
-    name = models.CharField(max_length=255)
-    slug = AutoSlugField(populate_from='name', unique=True)
-    description = models.TextField(blank=True, null=True)
-    video = models.FileField(upload_to=room_video_path, blank=True, null=True)
-    main_color = models.CharField(max_length=15, blank=True, null=True)
+    name = models.CharField(verbose_name="Nom", max_length=255)
+    slug = AutoSlugField(populate_from='name', unique=True, always_update=True)
+    video = models.CharField(max_length=255, blank=True, null=True, editable=False)
+    main_color = models.CharField(verbose_name="Couleur principale", max_length=15, blank=True, null=True)
 
     def __str__(self):
         return self.name
     
     class Meta:
         verbose_name = 'Pièce'
-        
 
-def item_image_path(instance, filename):
-    return f"{instance.slug}/images/{filename}"
+@receiver(post_save, sender=Room)
+def init_video_url(sender, instance, created, **kwargs):
+    if created or not instance.video:
+        instance.video =  f"{settings.MEDIA_URL}videos/{instance.slug}.mp4"
+        instance.save()
+        
 
 
 class Item(models.Model):
     uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
-    name = models.CharField(max_length=255)
-    slug = AutoSlugField(populate_from='name', unique=True)
-    image = models.FileField(upload_to='images', blank=True, null=True)
-    room = models.ForeignKey(Room, blank=True, null=True, on_delete=models.SET_NULL, related_name='items')
+    name = models.CharField(verbose_name="Nom", max_length=255)
+    slug = AutoSlugField(populate_from='name', unique=True, always_update=True)
+    image = models.CharField(max_length=255, blank=True, null=True, editable=False)
+    room = models.ForeignKey(Room, verbose_name="Pièce", blank=True, null=True, on_delete=models.SET_NULL, related_name='items')
 
     def __str__(self):
         return self.name
     
     class Meta:
         verbose_name = 'Objet'
+
+@receiver(post_save, sender=Item)
+def init_image_url(sender, instance, created, **kwargs):
+    if created or not instance.image:
+        instance.image =  f"{settings.MEDIA_URL}images/{instance.slug}.svg"
+        instance.save()
 
 
 class DigitalUse(models.Model):
