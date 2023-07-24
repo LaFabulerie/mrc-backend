@@ -46,5 +46,6 @@ class OrganizationViewSet(viewsets.ModelViewSet):
 
 
 class UserViewSet(viewsets.GenericViewSet, mixins.UpdateModelMixin):
+    permission_classes = [IsAuthenticated | HasOrganizationAPIKey]
     queryset = User.objects.all()
     serializer_class = UserSerializer
