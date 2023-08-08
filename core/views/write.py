@@ -13,6 +13,7 @@ class DigitalUseWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMix
 class DigitalServiceWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = DigitalService.objects.all()
     serializer_class = DigitalServiceSerializer
+    permission_classes = [IsAuthenticated]
 
 class AreaWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = Area.objects.all()

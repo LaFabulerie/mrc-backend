@@ -13,8 +13,9 @@ class ItemAdmin(admin.ModelAdmin):
     image_exits.boolean = True
     image_exits.short_description = 'Image ok ?'
 
-    list_display = ('uuid', 'name', 'slug', 'room', 'image_exits')
+    list_display = ('uuid', 'name', 'slug', 'room', 'image_exits', 'light_ctrl', 'light_pin')
     list_filter = ('room',)
+    list_editable = ('light_ctrl', 'light_pin')
 
 class ItemInline(admin.TabularInline):
     model = Item
@@ -31,9 +32,9 @@ class RoomAdmin(admin.ModelAdmin):
     video_exits.boolean = True
     video_exits.short_description = 'Video ok ?'
 
-    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits')
+    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'light_pin', 'position')
     search_fields = ('name',)
-    list_editable = ('main_color',)
+    list_editable = ('main_color', 'light_pin', 'position',)
     inlines = [ItemInline]
     
 
