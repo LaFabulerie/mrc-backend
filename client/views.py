@@ -98,13 +98,3 @@ class RemoteAccessViewSet(viewsets.ModelViewSet):
         
 
         return Response({'msg' : 'Une erreur est survenue lors de la synchronisation.'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-
-
-class MqttViewSet(viewsets.GenericViewSet):
-    permission_classes = [AllowAny]
-    
-    @action(detail=False, methods=['post'])
-    def publish(self, request):
-        from .mqtt import client as mqtt_client
-        mqtt_client.publish(**request.data)
-        return Response(status=status.HTTP_200_OK)
