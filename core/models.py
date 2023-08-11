@@ -1,11 +1,12 @@
 from django.db import models
 from django.conf import settings
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
+from django.utils.text import slugify
 from django.dispatch import receiver
 from autoslug import AutoSlugField
 from taggit.managers import TaggableManager
 import uuid
-
+import os
 
 
 
@@ -28,11 +29,17 @@ class Room(models.Model):
         verbose_name = 'Pièce'
         ordering = ['position']
 
-@receiver(post_save, sender=Room)
-def init_video_url(sender, instance, created, **kwargs):
-    if created or not instance.video:
-        instance.video =  f"{settings.MEDIA_URL}videos/{instance.slug}.mp4"
-        instance.save()
+
+@receiver(pre_save, sender=Room)
+def rename_video_file(sender, instance, **kwargs):
+    old_instance = Room.objects.filter(id=instance.id).first()
+    slug = slugify(instance.name)
+    video_file_name = f"{settings.MEDIA_URL}videos/{slug}.svg"
+    if old_instance and old_instance.video and old_instance.video != video_file_name:
+        old_video_path = f"{settings.MEDIA_ROOT}{old_instance.video.replace(settings.MEDIA_URL, '/')}"
+        new_video_path = f"{settings.MEDIA_ROOT}{video_file_name.replace(settings.MEDIA_URL, '/')}"
+        os.rename(old_video_path, new_video_path)
+    instance.video = video_file_name
 
 
 class Item(models.Model):
@@ -67,12 +74,17 @@ class Item(models.Model):
     
     class Meta:
         verbose_name = 'Objet'
-
-@receiver(post_save, sender=Item)
-def init_image_url(sender, instance, created, **kwargs):
-    if created or not instance.image:
-        instance.image =  f"{settings.MEDIA_URL}images/{instance.slug}.svg"
-        instance.save()
+        
+@receiver(pre_save, sender=Item)
+def rename_image_file(sender, instance, **kwargs):
+    old_instance = Item.objects.filter(id=instance.id).first()
+    slug = slugify(instance.name)
+    image_file_name = f"{settings.MEDIA_URL}images/{slug}.svg"
+    if old_instance and old_instance.image and old_instance.image != image_file_name:
+        old_image_path = f"{settings.MEDIA_ROOT}{old_instance.image.replace(settings.MEDIA_URL, '/')}"
+        new_image_path = f"{settings.MEDIA_ROOT}{image_file_name.replace(settings.MEDIA_URL, '/')}"
+        os.rename(old_image_path, new_image_path)
+    instance.image = image_file_name
 
 
 class DigitalUse(models.Model):
