@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import *
 import os
+from taggit.models import Tag
+from taggit.admin import TaggedItemInline
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
@@ -12,6 +14,8 @@ class ItemAdmin(admin.ModelAdmin):
         return os.path.exists(image_path)
     image_exits.boolean = True
     image_exits.short_description = 'Image ok ?'
+    
+
 
     list_display = ('uuid', 'name', 'slug', 'room', 'image_exits', 'light_ctrl', 'light_pin')
     list_filter = ('room',)
@@ -43,8 +47,17 @@ class DigitalUseAdmin(admin.ModelAdmin):
 
     def items_list(self, obj):
         return ", ".join([i.name for i in obj.items.all()])
+    items_list.short_description = 'Objets'
+    
+    def tags_list(self, obj):
+        return ";".join([t.name for t in obj.tags.all()])
+    tags_list.short_description = 'Tags'
+    
+    def service_count(self, obj):
+        return obj.services.count()
+    service_count.short_description = 'Nb services'
 
-    list_display = ('title', 'items_list')
+    list_display = ('title', 'uuid', 'tags_list', 'items_list', 'service_count')
     search_fields = ('title',)
     filter_horizontal = ('items',)
 
@@ -68,3 +81,13 @@ class DigitalServiceAdmin(admin.ModelAdmin):
 class AreaAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
+    
+admin.site.unregister(Tag)
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    inlines = [TaggedItemInline]
+    list_display = ["id", "name", "slug"]
+    list_editable = ["name"]
+    ordering = ["name", "slug"]
+    search_fields = ["name"]
+    prepopulated_fields = {"slug": ["name"]}
