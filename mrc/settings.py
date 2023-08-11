@@ -163,6 +163,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'org.User'
 
-MODE = env.str('MODE', default='WEB')
-# MQTT_BROKER = env.str('MQTT_BROKER', default=None)
+EXECUTION_MODE = env.str('EXECUTION_MODE', default='web')
 PRINTER_HOST = env.str('PRINTER_HOST', default=None)
