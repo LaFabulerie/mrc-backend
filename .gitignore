@@ -6,3 +6,5 @@
 /data/
 /db/*
 /media/
+*.xlsx
+.idea/

@@ -92,7 +92,7 @@ class DigitalUse(models.Model):
     
 
 class Area(models.Model):
-    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
+    uuid = models.UUIDField(default = uuid.uuid4, editable=False, unique=True)
     name = models.CharField(max_length=255)
     
     def __str__(self):
