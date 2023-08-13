@@ -1,10 +1,11 @@
 **/__pycache__
-/dj_rest_auth
 *.rest
 *.env*
 /data/.~lock*
 /data/
 /db/*
 /media/
+/static/
 *.xlsx
 .idea/
+!.env.example
