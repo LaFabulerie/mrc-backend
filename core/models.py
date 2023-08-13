@@ -34,7 +34,7 @@ class Room(models.Model):
 def rename_video_file(sender, instance, **kwargs):
     old_instance = Room.objects.filter(id=instance.id).first()
     slug = slugify(instance.name)
-    video_file_name = f"{settings.MEDIA_URL}videos/{slug}.svg"
+    video_file_name = f"{settings.MEDIA_URL}videos/{slug}.mp4"
     if old_instance and old_instance.video and old_instance.video != video_file_name:
         old_video_path = f"{settings.MEDIA_ROOT}{old_instance.video.replace(settings.MEDIA_URL, '/')}"
         new_video_path = f"{settings.MEDIA_ROOT}{video_file_name.replace(settings.MEDIA_URL, '/')}"
