@@ -2,7 +2,6 @@
 *.rest
 *.env*
 /data/.~lock*
-/data/
 /db/*
 /media/
 /static/

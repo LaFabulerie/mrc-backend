@@ -26,6 +26,8 @@ class Command(BaseCommand):
             items_df.to_excel(writer, sheet_name='DATA_OBJETS', index=False)
             uses_df.to_excel(writer, sheet_name='DATA_USAGES', index=False)
             mrc_df.to_excel(writer, sheet_name='MRC_FULL', index=False)
+        
+        mrc_df.to_csv('data/mrc.csv')
 
         
         
