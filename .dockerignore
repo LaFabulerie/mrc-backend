@@ -1,6 +1,5 @@
 **/__pycache__
 *.rest
-*.env*
 /db/*
 *.xlsx
 .idea/

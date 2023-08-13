@@ -14,7 +14,6 @@ RUN apt-get update -qq && apt-get install -y -qq \
 RUN /usr/local/bin/python -m pip install --upgrade pip
 
 COPY . /app
-COPY $ENV_FILE /app/.env
 WORKDIR /app
 RUN pip install -r requirements.txt
 RUN pip install gunicorn uvicorn[standard]
@@ -22,3 +21,5 @@ RUN pip install gunicorn uvicorn[standard]
 RUN ./manage.py collectstatic --no-input
 
 RUN apt-get clean all && rm -rf /var/apt/lists/* && rm -rf /var/cache/apt/*
+
+CMD ["/app/start.sh"]
