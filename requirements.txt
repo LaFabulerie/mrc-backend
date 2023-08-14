@@ -14,5 +14,4 @@ drf-flex-fields
 djangorestframework-api-key
 django-environ
 dj-rest-auth==4.0.1
-paho-mqtt
 pandas[excel]

@@ -1,6 +1,6 @@
 from django.conf import settings
 from rest_framework import routers
-from .views import RemoteAccessViewSet#, MqttViewSet
+from .views import RemoteAccessViewSet
 
 
 router = routers.SimpleRouter()
