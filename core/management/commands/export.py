@@ -16,6 +16,7 @@ class Command(BaseCommand):
         
         uses_df = pd.DataFrame(columns=['NOM', 'IDENTIFIANT UNIQUE', 'TAGS'])
         mrc_df = pd.DataFrame(columns=['NOM USAGE', 'IDENTIFIANT UNIQUE', 'DESCRIPTION', 'TAGS', 'NOM OBJET', 'IDENTIFIANT OBJET', 'CONTROLEUR LUMIERE OBJET', 'BROCHE LUMIERE OBJET', 'NOM PIECE', 'IDENTIFIANT PIECE', 'COULEUR', 'POSITION', 'BROCHE RUBAN LED'])
+
         for use in DigitalUse.objects.all():
             uses_df.loc[len(uses_df)] = [use.title, use.uuid, ";".join([t.name for t in use.tags.all()])]
             for item in use.items.all():
@@ -27,7 +28,7 @@ class Command(BaseCommand):
             uses_df.to_excel(writer, sheet_name='DATA_USAGES', index=False)
             mrc_df.to_excel(writer, sheet_name='MRC_FULL', index=False)
         
-        mrc_df.to_csv('data/mrc.csv')
+        mrc_df.to_csv('data/mrc.csv', sep=',', index=False)
 
         
         
