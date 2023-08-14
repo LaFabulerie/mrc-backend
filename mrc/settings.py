@@ -7,6 +7,7 @@ env = environ.Env()
 env.read_env(env.str('ENV_PATH', '.env'))
 
 ENV_NAME = env.str('ENV_NAME')
+EXECUTION_MODE = env.str('EXECUTION_MODE', default='web')
 
 SECRET_KEY = env('SECRET_KEY')
 
@@ -15,7 +16,10 @@ TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ["*"]
 
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+if EXECUTION_MODE == 'web':
+    CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+else:
+    CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 FRONTEND_URL = env.str('FRONTEND_URL', default='http://localhost:4200')
@@ -163,4 +167,3 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'org.User'
 
-EXECUTION_MODE = env.str('EXECUTION_MODE', default='web')
