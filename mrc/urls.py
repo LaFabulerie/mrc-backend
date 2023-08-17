@@ -29,12 +29,7 @@ urlpatterns = [
     path('api/client/', include('client.urls')),
     re_path(r'^api/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^api/redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path('', admin.site.urls),
-]
+    path('admin/', admin.site.urls),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-
-print(f"\n{10*'*'} ENVIRONMENT : {settings.ENV_NAME} {10*'*'}\n")
+print(f"\n{10*'*'} ENVIRONMENT : {settings.ENV_NAME} - DEBUG : {settings.DEBUG} {10*'*'} \n".upper())
