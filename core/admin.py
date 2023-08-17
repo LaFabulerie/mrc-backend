@@ -36,9 +36,9 @@ class RoomAdmin(admin.ModelAdmin):
     video_exits.boolean = True
     video_exits.short_description = 'Video ok ?'
 
-    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'light_pin', 'position')
+    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'position')
     search_fields = ('name',)
-    list_editable = ('main_color', 'light_pin', 'position',)
+    list_editable = ('main_color', 'position',)
     inlines = [ItemInline]
     
 
