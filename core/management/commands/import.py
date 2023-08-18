@@ -20,10 +20,10 @@ class Command(BaseCommand):
                 try:
                     room = Room.objects.get(uuid=room_uuid)
                     room.name = room_name
-                    room.main_color = room_color
-                    room.position = room_position
-                    room.light_pin = int(room_light_pin) if room_light_pin else None
-                    room.save()
+                    # room.main_color = room_color
+                    # room.position = room_position
+                    # room.light_pin = int(room_light_pin) if room_light_pin else None
+                    # room.save()
                 except Room.DoesNotExist:
                     room = Room.objects.create(
                         name=room_name, 
@@ -35,11 +35,11 @@ class Command(BaseCommand):
                 
                 try:
                     item = Item.objects.get(uuid=item_uuid)
-                    item.name = item_name
-                    item.room = room
-                    item.light_ctrl = int(item_light_ctrl) if item_light_ctrl else None
-                    item.light_pin = item_light_pin
-                    item.save()
+                    # item.name = item_name
+                    # item.room = room
+                    # item.light_ctrl = int(item_light_ctrl) if item_light_ctrl else None
+                    # item.light_pin = item_light_pin
+                    # item.save()
                 except Item.DoesNotExist:
                     item = Item.objects.create(
                         name=item_name, 
@@ -51,10 +51,10 @@ class Command(BaseCommand):
                     
                 try:
                     use = DigitalUse.objects.get(uuid=use_uuid)
-                    use.title = use_name
-                    use.description = use_description
-                    use.items.add(item)
-                    use.save()
+                    # use.title = use_name
+                    # use.description = use_description
+                    # use.items.add(item)
+                    # use.save()
                 except DigitalUse.DoesNotExist:
                     use = DigitalUse.objects.create(title=use_name, description=use_description, uuid=use_uuid)
                     use.items.add(item)
