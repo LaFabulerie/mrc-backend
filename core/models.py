@@ -22,6 +22,8 @@ class Room(models.Model):
 
     position = models.IntegerField(verbose_name="Position", default=0)
 
+    next_room = models.ForeignKey('self', verbose_name="Pièce suivante", blank=True, null=True, on_delete=models.SET_NULL, related_name='previous_room')
+
     def __str__(self):
         return self.name
     

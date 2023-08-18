@@ -19,7 +19,7 @@ class ItemAdmin(admin.ModelAdmin):
 
     list_display = ('uuid', 'name', 'slug', 'room', 'image_exits', 'light_ctrl', 'light_pin')
     list_filter = ('room',)
-    list_editable = ('light_ctrl', 'light_pin')
+    list_editable = ('room', 'light_ctrl', 'light_pin')
 
 class ItemInline(admin.TabularInline):
     model = Item
@@ -36,9 +36,16 @@ class RoomAdmin(admin.ModelAdmin):
     video_exits.boolean = True
     video_exits.short_description = 'Video ok ?'
 
-    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'position')
+    def get_previous_room(self, obj):
+        previous_room = obj.previous_room.first()
+        if previous_room:
+            return previous_room.name
+        return None
+    get_previous_room.short_description = 'Pièce précédente'
+
+    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'position', 'get_previous_room', 'next_room')
     search_fields = ('name',)
-    list_editable = ('main_color', 'position',)
+    list_editable = ('main_color', 'position', 'next_room')
     inlines = [ItemInline]
     
 
