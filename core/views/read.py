@@ -1,11 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
 from taggit.models import Tag
 from core.models import Room, DigitalUse, DigitalService, Item
 from core.serializers import RoomSerializer, DigitalUseSerializer, DigitalServiceSerializer, ItemSerializer
 from org.permissions import HasOrganizationAPIKey
-from rest_framework.permissions import IsAuthenticated
 from core.permissions import IsLocalAccess
 
 class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
@@ -13,6 +14,51 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
     serializer_class = RoomSerializer
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
     lookup_field = 'uuid'
+
+    def compute_distance(self, path):
+        distance = 0
+        for i in range(1, len(path)):
+            distance += path[i].position - path[i-1].position
+        return distance
+
+    @action(detail=False, methods=['get'])
+    def distance(self, request):
+        from_room_uuid = request.GET.get('from', None)
+        to_room_uuid = request.GET.get('to', None)
+
+        start_room = self.get_queryset().get(uuid=from_room_uuid)
+        end_room = self.get_queryset().get(uuid=to_room_uuid)
+        
+        fw_path = []
+        bw_path = []
+
+        current_room = start_room
+        while current_room.uuid != end_room.uuid:
+            fw_path.append(current_room)
+            current_room = current_room.previous_room.first()
+        fw_path.append(end_room)
+        
+        current_room = start_room
+        while current_room.uuid != end_room.uuid:
+            bw_path.append(current_room)
+            current_room = current_room.next_room
+        bw_path.append(end_room)
+
+        fw_dist = self.compute_distance(fw_path)
+        bw_dist = self.compute_distance(bw_path)- 370
+
+        resp = {
+            'uuid': end_room.uuid,
+            'slug': end_room.slug,
+        }
+        if abs(fw_dist) < abs(bw_dist):
+            resp["distance"] = fw_dist
+        else:
+            resp["distance"] =  bw_dist
+        
+        return Response(resp)
+    
+
 
 class ItemReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = Item.objects.all()
