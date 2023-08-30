@@ -135,8 +135,8 @@ REST_FRAMEWORK = {
 
 REST_AUTH = {
     'USE_JWT': True,
-    'JWT_AUTH_HTTPONLY' : False,
-    'LOGIN_SERIALIZER' : 'org.serializers.LoginSerializer',
+    'JWT_AUTH_HTTPONLY': False,
+    'LOGIN_SERIALIZER': 'org.serializers.LoginSerializer',
     'REGISTER_SERIALIZER': 'org.serializers.RegisterSerializer',
     'PASSWORD_RESET_SERIALIZER': 'org.serializers.PasswordResetSerializer',
     'USER_DETAILS_SERIALIZER': 'org.serializers.UserSerializer',

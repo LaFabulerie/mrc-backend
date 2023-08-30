@@ -9,8 +9,6 @@ import uuid
 import os
 
 
-
-
 class Room(models.Model):
     uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
     name = models.CharField(verbose_name="Nom", max_length=255)
@@ -45,7 +43,7 @@ def rename_video_file(sender, instance, **kwargs):
 
 
 class Item(models.Model):
-    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable = False, unique=True)
     name = models.CharField(verbose_name="Nom", max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True)
     image = models.CharField(max_length=255, blank=True, null=True, editable=False)
@@ -72,7 +70,7 @@ class Item(models.Model):
     ])
 
     def __str__(self):
-        return self.name
+        return f"{self.room.name} - {self.name}"
     
     class Meta:
         verbose_name = 'Objet'
@@ -98,15 +96,15 @@ class DigitalUse(models.Model):
     tags = TaggableManager(blank=True)
     
     def __str__(self):
-        return self.title
-    
+        return f"[{','.join([item.room.name +' - '+item.name for item in self.items.all()])}] {self.title}"
+
     class Meta:
         verbose_name = 'Usage numérique'
         verbose_name_plural = 'Usages numériques'   
     
 
 class Area(models.Model):
-    uuid = models.UUIDField(default = uuid.uuid4, editable=False, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(max_length=255)
     
     def __str__(self):
@@ -118,7 +116,7 @@ class Area(models.Model):
     
 
 class DigitalService(models.Model):
-    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='title', unique=True)
     description = models.TextField(blank=True, null=True)
