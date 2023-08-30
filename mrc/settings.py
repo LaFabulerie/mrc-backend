@@ -34,15 +34,18 @@ INSTALLED_APPS = [
     "corsheaders",
     
     'drf_yasg',
-    'rest_framework',
-    'rest_framework_api_key',
-    'rest_framework.authtoken',
-    'dj_rest_auth',
+
+    "anymail",
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'dj_rest_auth',
     'dj_rest_auth.registration',
-    
+    'rest_framework',
+    'rest_framework_api_key',
+    'rest_framework.authtoken',
+
     'django_filters',
     "taggit",
      
@@ -163,3 +166,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'org.User'
 
+if EXECUTION_MODE == 'WEB':
+    EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+    DEFAULT_FROM_EMAIL = "ne-pas-repondre@maison-reconnectee.fr"
+    ANYMAIL = {
+        "SENDINBLUE_API_KEY": env.str('SENDINBLUE_API_KEY'),
+    }
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    DEFAULT_FROM_EMAIL = 'no-reply@localhost'
