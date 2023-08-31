@@ -21,15 +21,22 @@ schema_view = get_schema_view(
    permission_classes=[permissions.AllowAny],
 )
 
-urlpatterns = [
+
+api_urlpatterns = [
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/auth/signup/', include('org.registration_urls')),
+    path('api/client/', include('client.urls')),
     path('api/', include('core.urls')),
     path('api/', include('org.urls')),
-    path('api/client/', include('client.urls')),
+]
+
+if settings.EXECUTION_MODE == 'STANDALONE':
+    api_urlpatterns.append(path('api/', include('demo.urls')))
+
+urlpatterns = api_urlpatterns + [
     re_path(r'^api/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^api/redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-print(f"\n{10*'*'} ENVIRONMENT : {settings.ENV_NAME} - DEBUG : {settings.DEBUG} {10*'*'} \n".upper())
+print(f"\n{10*'*'} ENVIRONMENT : {settings.EXECUTION_MODE} - DEBUG : {settings.DEBUG} {10*'*'} \n".upper())

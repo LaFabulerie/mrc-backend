@@ -6,8 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 env.read_env(env.str('ENV_PATH', '.env'))
 
-ENV_NAME = env.str('ENV_NAME')
-EXECUTION_MODE = env.str('EXECUTION_MODE', default='web')
+EXECUTION_MODE = env.str('EXECUTION_MODE', default='WEB')
 
 SECRET_KEY = env('SECRET_KEY')
 
@@ -35,15 +34,18 @@ INSTALLED_APPS = [
     "corsheaders",
     
     'drf_yasg',
-    'rest_framework',
-    'rest_framework_api_key',
-    'rest_framework.authtoken',
-    'dj_rest_auth',
+
+    "anymail",
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'dj_rest_auth',
     'dj_rest_auth.registration',
-    
+    'rest_framework',
+    'rest_framework_api_key',
+    'rest_framework.authtoken',
+
     'django_filters',
     "taggit",
      
@@ -52,6 +54,9 @@ INSTALLED_APPS = [
     'client',
     
 ]
+
+if EXECUTION_MODE == 'STANDALONE':
+    INSTALLED_APPS.append('demo')
 
 SITE_ID = 1
 
@@ -136,8 +141,8 @@ REST_FRAMEWORK = {
 
 REST_AUTH = {
     'USE_JWT': True,
-    'JWT_AUTH_HTTPONLY' : False,
-    'LOGIN_SERIALIZER' : 'org.serializers.LoginSerializer',
+    'JWT_AUTH_HTTPONLY': False,
+    'LOGIN_SERIALIZER': 'org.serializers.LoginSerializer',
     'REGISTER_SERIALIZER': 'org.serializers.RegisterSerializer',
     'PASSWORD_RESET_SERIALIZER': 'org.serializers.PasswordResetSerializer',
     'USER_DETAILS_SERIALIZER': 'org.serializers.UserSerializer',
@@ -164,3 +169,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'org.User'
 
+if EXECUTION_MODE == 'WEB':
+    EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
+    DEFAULT_FROM_EMAIL = "ne-pas-repondre@maison-reconnectee.fr"
+    ANYMAIL = {
+        "SENDINBLUE_API_KEY": env.str('SENDINBLUE_API_KEY'),
+    }
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    DEFAULT_FROM_EMAIL = 'no-reply@localhost'

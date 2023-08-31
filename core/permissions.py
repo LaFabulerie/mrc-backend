@@ -8,7 +8,10 @@ class IsLocalAccess(BasePermission):
     """
 
     def has_permission(self, request, view):
-        origin = urllib.parse.urlparse(request.META["HTTP_ORIGIN"])
-        origin = origin.netloc.split(":")[0]
+        try:
+            origin = urllib.parse.urlparse(request.META["HTTP_ORIGIN"])
+            origin = origin.netloc.split(":")[0]
+        except:
+            origin = ''
         host = request.META["HTTP_HOST"].split(":")[0]
         return settings.EXECUTION_MODE == "standalone" or (origin == host or origin == "localhost")

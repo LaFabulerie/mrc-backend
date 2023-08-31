@@ -1,0 +1,25 @@
+{% load static %}
+<html>
+<head>
+<link rel="stylesheet" href="https://unpkg.com/primeflex@^3/primeflex.css">
+<link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css">
+<link rel="stylesheet" href="https://unpkg.com/primeflex/themes/saga-blue.css">
+</head>
+<body>
+
+
+  <div class="bg-white p-4">
+    <div class="flex justify-content-center">
+      <img src="{{ host }}{% static 'core/logo_mrc.png' %}" width="400" class="my-5" alt="Maison Reconnectée"/>
+    </div>
+{%  for service in services %}
+
+  <div class="flex flex-column border-2  border-round p-4  mb-2 shadow-2">
+          <span class="font-bold mb-3">{{ service.title }}{% if service.area %} - {{service.area.name}}{% endif %}</span>
+          {{ service.description|safe }}
+          <span class="font-bold mt-3"><i class="pi pi-globe mr-2"></i>{{ service.url }}</span>
+        </div>
+{% endfor %}
+        </div>
+</body>
+</html>

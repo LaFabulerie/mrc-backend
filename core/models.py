@@ -9,8 +9,6 @@ import uuid
 import os
 
 
-
-
 class Room(models.Model):
     uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
     name = models.CharField(verbose_name="Nom", max_length=255)
@@ -36,16 +34,16 @@ class Room(models.Model):
 def rename_video_file(sender, instance, **kwargs):
     old_instance = Room.objects.filter(id=instance.id).first()
     slug = slugify(instance.name)
-    video_file_name = f"{settings.MEDIA_URL}videos/{slug}.mp4"
+    video_file_name = f"{settings.STATIC_URL}videos/{slug}.mp4"
     if old_instance and old_instance.video and old_instance.video != video_file_name:
-        old_video_path = f"{settings.MEDIA_ROOT}{old_instance.video.replace(settings.MEDIA_URL, '/')}"
-        new_video_path = f"{settings.MEDIA_ROOT}{video_file_name.replace(settings.MEDIA_URL, '/')}"
+        old_video_path = f"{settings.STATIC_URL}{old_instance.video.replace(settings.STATIC_URL, '/')}"
+        new_video_path = f"{settings.STATIC_URL}{video_file_name.replace(settings.STATIC_URL, '/')}"
         os.rename(old_video_path, new_video_path)
     instance.video = video_file_name
 
 
 class Item(models.Model):
-    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable = False, unique=True)
     name = models.CharField(verbose_name="Nom", max_length=255)
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True)
     image = models.CharField(max_length=255, blank=True, null=True, editable=False)
@@ -72,7 +70,7 @@ class Item(models.Model):
     ])
 
     def __str__(self):
-        return self.name
+        return f"{self.room.name} - {self.name}"
     
     class Meta:
         verbose_name = 'Objet'
@@ -81,12 +79,13 @@ class Item(models.Model):
 def rename_image_file(sender, instance, **kwargs):
     old_instance = Item.objects.filter(id=instance.id).first()
     slug = slugify(instance.name)
-    image_file_name = f"{settings.MEDIA_URL}images/{slug}.svg"
+    image_file_name = f"{settings.STATIC_URL}images/{slug}.svg"
     if old_instance and old_instance.image and old_instance.image != image_file_name:
-        old_image_path = f"{settings.MEDIA_ROOT}{old_instance.image.replace(settings.MEDIA_URL, '/')}"
-        new_image_path = f"{settings.MEDIA_ROOT}{image_file_name.replace(settings.MEDIA_URL, '/')}"
+        old_image_path = f"{settings.STATIC_URL}{old_instance.image.replace(settings.STATIC_URL, '/')}"
+        new_image_path = f"{settings.STATIC_URL}{image_file_name.replace(settings.STATIC_URL, '/')}"
         os.rename(old_image_path, new_image_path)
     instance.image = image_file_name
+    print(instance.image)
 
 
 class DigitalUse(models.Model):
@@ -98,15 +97,15 @@ class DigitalUse(models.Model):
     tags = TaggableManager(blank=True)
     
     def __str__(self):
-        return self.title
-    
+        return f"[{','.join([item.room.name +' - '+item.name for item in self.items.all()])}] {self.title}"
+
     class Meta:
         verbose_name = 'Usage numérique'
         verbose_name_plural = 'Usages numériques'   
     
 
 class Area(models.Model):
-    uuid = models.UUIDField(default = uuid.uuid4, editable=False, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(max_length=255)
     
     def __str__(self):
@@ -118,7 +117,7 @@ class Area(models.Model):
     
 
 class DigitalService(models.Model):
-    uuid = models.UUIDField(default = uuid.uuid4, editable = False, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.CharField(max_length=255)
     slug = AutoSlugField(populate_from='title', unique=True)
     description = models.TextField(blank=True, null=True)

@@ -10,7 +10,7 @@ class ItemAdmin(admin.ModelAdmin):
     def image_exits(self, obj):
         if obj.image == None:
             return False
-        image_path = settings.MEDIA_ROOT / f"images/{obj.slug}.svg"
+        image_path = settings.STATIC_ROOT / f"images/{obj.slug}.svg"
         return os.path.exists(image_path)
     image_exits.boolean = True
     image_exits.short_description = 'Image ok ?'
@@ -31,7 +31,7 @@ class RoomAdmin(admin.ModelAdmin):
     def video_exits(self, obj):
         if obj.video == None:
             return False
-        video_path = settings.MEDIA_ROOT / f"videos/{obj.slug}.mp4"
+        video_path = settings.STATIC_ROOT / f"videos/{obj.slug}.mp4"
         return os.path.exists(video_path)
     video_exits.boolean = True
     video_exits.short_description = 'Video ok ?'

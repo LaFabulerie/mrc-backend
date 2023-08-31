@@ -1,13 +1,19 @@
 from rest_framework.views import APIView
-from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
+from rest_framework.viewsets import ReadOnlyModelViewSet, GenericViewSet
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from taggit.models import Tag
 from core.models import Room, DigitalUse, DigitalService, Item
 from core.serializers import RoomSerializer, DigitalUseSerializer, DigitalServiceSerializer, ItemSerializer
-from org.permissions import HasOrganizationAPIKey
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
 from core.permissions import IsLocalAccess
+from org.permissions import HasOrganizationAPIKey
+
+
 
 class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = Room.objects.all()
@@ -82,3 +88,4 @@ class TagApiView(APIView):
     def get(self, request, format=None):
         tags = Tag.objects.exclude(name="").values_list('name', flat=True)
         return Response(tags)
+
