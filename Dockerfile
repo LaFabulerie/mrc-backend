@@ -18,7 +18,7 @@ COPY . /app
 COPY .env.$STAGE /app/.env
 WORKDIR /app
 RUN pip install -r requirements.txt
-RUN pip install gunicorn uvicorn[standard]
+RUN pip install gunicorn
 
 RUN ./manage.py collectstatic --no-input
 
