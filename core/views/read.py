@@ -130,7 +130,7 @@ class TagApiView(APIView):
         return Response(tags)
 
 class CartViewSet(GenericViewSet):
-    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated| AllowAny]
+    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
     @action(detail=False, methods=['post'])
     def email(self, request, format=None):
         email = request.data.get('email', None)
@@ -149,7 +149,7 @@ class CartViewSet(GenericViewSet):
                                      settings.DEFAULT_FROM_EMAIL,
                                      [email])
         msg.attach_alternative(html_mail, "text/html")
-        timestamp = calendar.timegm(time.gmtime())
+        
 
         host = 'http://localhost:8000'
         if not settings.DEBUG:
@@ -160,6 +160,7 @@ class CartViewSet(GenericViewSet):
             'host': host,
         }
 
+        timestamp = calendar.timegm(time.gmtime())
         HTML(string=render_to_string('cart/pdf.html', context)).write_pdf(f"/tmp/services{hex(timestamp)[2:]}_.pdf")
 
         with open(f"/tmp/services{hex(timestamp)[2:]}_.pdf", 'rb') as f:
