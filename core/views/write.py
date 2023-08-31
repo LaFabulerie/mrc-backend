@@ -14,8 +14,6 @@ from django.http import HttpResponse
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.sites.models import Site
 from weasyprint import HTML
-import time
-import calendar
 import mimetypes
 from django.core.files import File
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -84,8 +82,8 @@ class CartViewSet(GenericViewSet):
         if len(service_uuids) == 0:
             return Response({'status': 'error', 'message': 'Cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
 
-        text_mail = render_to_string('email/cart.txt', {'cart': cart})
-        html_mail = render_to_string('email/cart.html', {'cart': cart})
+        text_mail = render_to_string('email/cart.txt')
+        html_mail = render_to_string('email/cart.html')
 
         msg = EmailMultiAlternatives("Maison (re)connectée - Votre liste de service",
                                      text_mail,
@@ -103,11 +101,13 @@ class CartViewSet(GenericViewSet):
             'host': host,
         }
 
-        timestamp = calendar.timegm(time.gmtime())
-        HTML(string=render_to_string('cart/pdf.html', context)).write_pdf(f"/tmp/services{hex(timestamp)[2:]}_.pdf")
+        pdf_content = HTML(
+            string=render_to_string("cart/pdf.html", context),
+            base_url="not-used://",
+            url_fetcher=django_url_fetcher,
+        ).write_pdf()
 
-        with open(f"/tmp/services{hex(timestamp)[2:]}_.pdf", 'rb') as f:
-            msg.attach("services.pdf", f.read(), 'application/pdf')
+        msg.attach("services.pdf", pdf_content, 'application/pdf')
 
         msg.send()
         return Response({'status': 'ok'}, status=status.HTTP_200_OK)
