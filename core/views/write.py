@@ -91,18 +91,17 @@ class CartViewSet(GenericViewSet):
                                      [email])
         msg.attach_alternative(html_mail, "text/html")
         
-
-        host = 'http://localhost:8000'
-        if not settings.DEBUG:
-            host = Site.objects.get_current().domain
+        host = Site.objects.get_current().domain
 
         context = {
             'services': DigitalService.objects.filter(uuid__in=service_uuids),
             'host': host,
         }
 
+        html_content = render_to_string("cart/pdf.html", context)
+        
         pdf_content = HTML(
-            string=render_to_string("cart/pdf.html", context),
+            string=html_content,
             base_url="not-used://",
             url_fetcher=django_url_fetcher,
         ).write_pdf()
@@ -120,9 +119,7 @@ class CartViewSet(GenericViewSet):
         if len(service_uuids) == 0:
             return Response({'status': 'error', 'message': 'Cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
 
-        host = 'http://localhost:8000'
-        if not settings.DEBUG:
-            host = Site.objects.get_current().domain
+        host = Site.objects.get_current().domain
 
         context = {
             'services': DigitalService.objects.filter(uuid__in=service_uuids),
@@ -132,8 +129,10 @@ class CartViewSet(GenericViewSet):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = f"attachment; filename=services.pdf"
 
+        html_content = render_to_string("cart/pdf.html", context)
+        
         HTML(
-            string=render_to_string("cart/pdf.html", context),
+            string=html_content,
             base_url="not-used://",
             url_fetcher=django_url_fetcher,
         ).write_pdf(

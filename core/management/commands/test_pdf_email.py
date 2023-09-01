@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         email = "alban.tiberghien@gmail.com"
-        services = DigitalService.objects.all().order_by('?')[:3]
+        services = DigitalService.objects.all().order_by('?')[:10]
 
         text_mail = render_to_string('email/cart.txt')
         html_mail = render_to_string('email/cart.html')
@@ -28,19 +28,17 @@ class Command(BaseCommand):
         msg.attach_alternative(html_mail, "text/html")
         
 
-        host = 'http://localhost:8000'
-        if not settings.DEBUG:
-            host = Site.objects.get_current().domain
+        host = Site.objects.get_current().domain
 
         context = {
             'services': services,
             'host': host,
         }
 
-        timestamp = calendar.timegm(time.gmtime())
+        html_content = render_to_string("cart/pdf.html", context)
         
         pdf_content = HTML(
-            string=render_to_string("cart/pdf.html", context),
+            string=html_content,
             base_url="not-used://",
             url_fetcher=django_url_fetcher,
         ).write_pdf()
