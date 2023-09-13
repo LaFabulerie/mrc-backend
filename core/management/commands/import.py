@@ -14,32 +14,21 @@ class Command(BaseCommand):
             csv_reader = csv.reader(f, delimiter=',')
             next(csv_reader) # skip header
             for row in csv_reader:
-                # 'NOM USAGE', 'IDENTIFIANT UNIQUE', 'DESCRIPTION', 'TAGS', 'NOM OBJET', 'IDENTIFIANT OBJET', 'CONTROLEUR LUMIERE OBJET', 'BROCHE LUMIERE OBJET', 'NOM PIECE', 'IDENTIFIANT PIECE', 'COULEUR', 'POSITION', 'BROCHE RUBAN LED'
-                use_name, use_uuid, use_description, use_tags_raw, item_name, item_uuid, item_light_ctrl, item_light_pin, room_name, room_uuid, room_color, room_position, room_light_pin = row
+                # 'NOM USAGE', 'IDENTIFIANT UNIQUE', 'DESCRIPTION', 'TAGS', 'NOM OBJET', 'IDENTIFIANT OBJET', 'CONTROLEUR LUMIERE OBJET', 'BROCHE LUMIERE OBJET', 'NOM PIECE', 'IDENTIFIANT PIECE', 'COULEUR', 'POSITION'
+                use_name, use_uuid, use_description, use_tags_raw, item_name, item_uuid, item_light_ctrl, item_light_pin, room_name, room_uuid, room_color, room_position = row
                 
                 try:
                     room = Room.objects.get(uuid=room_uuid)
-                    room.name = room_name
-                    # room.main_color = room_color
-                    # room.position = room_position
-                    # room.light_pin = int(room_light_pin) if room_light_pin else None
-                    # room.save()
                 except Room.DoesNotExist:
                     room = Room.objects.create(
                         name=room_name, 
                         uuid=room_uuid,
                         main_color=room_color,
                         position=room_position,
-                        light_pin=int(room_light_pin) if room_light_pin else None
                     )
                 
                 try:
                     item = Item.objects.get(uuid=item_uuid)
-                    # item.name = item_name
-                    # item.room = room
-                    # item.light_ctrl = int(item_light_ctrl) if item_light_ctrl else None
-                    # item.light_pin = item_light_pin
-                    # item.save()
                 except Item.DoesNotExist:
                     item = Item.objects.create(
                         name=item_name, 
@@ -51,10 +40,6 @@ class Command(BaseCommand):
                     
                 try:
                     use = DigitalUse.objects.get(uuid=use_uuid)
-                    # use.title = use_name
-                    # use.description = use_description
-                    # use.items.add(item)
-                    # use.save()
                 except DigitalUse.DoesNotExist:
                     use = DigitalUse.objects.create(title=use_name, description=use_description, uuid=use_uuid)
                     use.items.add(item)

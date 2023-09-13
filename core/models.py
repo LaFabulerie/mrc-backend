@@ -16,7 +16,7 @@ class Room(models.Model):
     video = models.CharField(max_length=255, blank=True, null=True, editable=False)
     main_color = models.CharField(verbose_name="Couleur principale", max_length=15, blank=True, null=True)
 
-    light_pin = models.IntegerField(verbose_name="Numéro de la broche du ruban LED", null=True, blank=True)
+    # light_pin = models.IntegerField(verbose_name="Numéro de la broche du ruban LED", null=True, blank=True)
 
     position = models.IntegerField(verbose_name="Position", default=0)
 

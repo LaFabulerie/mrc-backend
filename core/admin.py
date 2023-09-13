@@ -43,9 +43,9 @@ class RoomAdmin(admin.ModelAdmin):
         return None
     get_previous_room.short_description = 'Pièce précédente'
 
-    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'position', 'get_previous_room', 'next_room')
+    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'position')
     search_fields = ('name',)
-    list_editable = ('main_color', 'position', 'next_room')
+    list_editable = ('main_color', 'position')
     inlines = [ItemInline]
     
 
@@ -79,8 +79,8 @@ class DigitalServiceAdmin(admin.ModelAdmin):
     def items_list(self, obj):
         return ", ".join([i.name for i in obj.use.items.all()])
 
-    list_display = ('title', 'use', 'items_list', 'area')
-    search_fields = ('title',)
+    list_display = ('title', 'uuid', 'use', 'items_list', 'area')
+    search_fields = ('title', 'uuid',)
     inlines = [DigitalServiceContactInline]
 
 

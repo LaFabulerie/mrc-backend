@@ -48,7 +48,7 @@ class RoomSerializer(FlexFieldsModelSerializer):
     
     class Meta:
         model = Room
-        fields = ('id', 'name', 'slug', 'video', 'items', 'uuid', 'main_color', 'position', 'light_pin')
+        fields = ('id', 'name', 'slug', 'video', 'items', 'uuid', 'main_color', 'position')
         expandable_fields = {
             'items': (ItemSerializer, {'many': True, 'read_only':True}), 
         }

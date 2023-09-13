@@ -6,21 +6,21 @@ class Command(BaseCommand):
    
     def handle(self, *args, **options):
 
-        rooms_df = pd.DataFrame(columns=['NOM', 'IDENTIFIANT UNIQUE', 'NOM STANDARDISÉ', 'COULEUR', 'POSITION', 'BROCHE RUBAN LED'])
+        rooms_df = pd.DataFrame(columns=['NOM', 'IDENTIFIANT UNIQUE', 'NOM STANDARDISÉ', 'COULEUR', 'POSITION'])
         for room in Room.objects.all():
-            rooms_df.loc[len(rooms_df)] = [room.name, room.uuid, room.slug, room.main_color, room.position, room.light_pin]
+            rooms_df.loc[len(rooms_df)] = [room.name, room.uuid, room.slug, room.main_color, room.position]
         
         items_df = pd.DataFrame(columns=['NOM', 'IDENTIFIANT UNIQUE', 'NOM STANDARDISÉ', 'PIECE', 'IDENTIFIANT PIECE', 'CONTROLEUR LUMIERE', 'BROCHE LUMIERE'])
         for item in Item.objects.all():
             items_df.loc[len(items_df)] = [item.name, item.uuid, item.slug, item.room.name, item.room.uuid, item.light_ctrl, item.light_pin]
         
         uses_df = pd.DataFrame(columns=['NOM', 'IDENTIFIANT UNIQUE', 'TAGS'])
-        mrc_df = pd.DataFrame(columns=['NOM USAGE', 'IDENTIFIANT UNIQUE', 'DESCRIPTION', 'TAGS', 'NOM OBJET', 'IDENTIFIANT OBJET', 'CONTROLEUR LUMIERE OBJET', 'BROCHE LUMIERE OBJET', 'NOM PIECE', 'IDENTIFIANT PIECE', 'COULEUR', 'POSITION', 'BROCHE RUBAN LED'])
+        mrc_df = pd.DataFrame(columns=['NOM USAGE', 'IDENTIFIANT UNIQUE', 'DESCRIPTION', 'TAGS', 'NOM OBJET', 'IDENTIFIANT OBJET', 'CONTROLEUR LUMIERE OBJET', 'BROCHE LUMIERE OBJET', 'NOM PIECE', 'IDENTIFIANT PIECE', 'COULEUR', 'POSITION'])
 
         for use in DigitalUse.objects.all():
             uses_df.loc[len(uses_df)] = [use.title, use.uuid, ";".join([t.name for t in use.tags.all()])]
             for item in use.items.all():
-                mrc_df.loc[len(mrc_df)] = [use.title, use.uuid, use.description, ";".join([t.name for t in use.tags.all()]), item.name, item.uuid, item.light_ctrl, item.light_pin, item.room.name, item.room.uuid, item.room.main_color, item.room.position, item.room.light_pin]
+                mrc_df.loc[len(mrc_df)] = [use.title, use.uuid, use.description, ";".join([t.name for t in use.tags.all()]), item.name, item.uuid, item.light_ctrl, item.light_pin, item.room.name, item.room.uuid, item.room.main_color, item.room.position]
         
         with pd.ExcelWriter('mrc.xlsx') as writer:
             rooms_df.to_excel(writer, sheet_name='DATA_PIECES', index=False)
