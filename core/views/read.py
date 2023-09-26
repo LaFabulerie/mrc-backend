@@ -51,7 +51,7 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
         bw_path.append(end_room)
 
         fw_dist = self.compute_distance(fw_path)
-        bw_dist = self.compute_distance(bw_path)- 370
+        bw_dist = self.compute_distance(bw_path)- 800
 
         resp = {
             'uuid': end_room.uuid,
