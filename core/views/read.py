@@ -8,7 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from core.permissions import IsLocalAccess
 from org.permissions import HasOrganizationAPIKey
-
+import sys
 
 
 class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
@@ -58,15 +58,22 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
         bw_path.pop(0)
         bw_path.append(end_room)
 
-        print(fw_path)  
-        print(bw_path)
+        # print(fw_path)  
+        # print(bw_path)
 
-        if self.crossed_garden(fw_path):
-            resp["distance"] = -len(bw_path)
-        elif self.crossed_garden(bw_path):
-            resp["distance"] = len(fw_path)
+        d1 = sys.maxsize
+        d2 = sys.maxsize
 
+        if not self.crossed_garden(fw_path):
+            d1 = len(fw_path)
         
+        if not self.crossed_garden(bw_path):
+            d2 = -len(bw_path)
+        
+        print(d1, d2)
+
+        resp['distance'] = d1 if abs(d1) < abs(d2) else d2
+
         return Response(resp)
     
 
