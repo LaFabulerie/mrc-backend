@@ -1,15 +1,11 @@
 from rest_framework.views import APIView
-from rest_framework.viewsets import ReadOnlyModelViewSet, GenericViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from taggit.models import Tag
 from core.models import Room, DigitalUse, DigitalService, Item
 from core.serializers import RoomSerializer, DigitalUseSerializer, DigitalServiceSerializer, ItemSerializer
-from django.conf import settings
-from django.template.loader import render_to_string
-from django.http import HttpResponse
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
 from core.permissions import IsLocalAccess
 from org.permissions import HasOrganizationAPIKey
 
@@ -35,6 +31,15 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
 
         start_room = self.get_queryset().get(uuid=from_room_uuid)
         end_room = self.get_queryset().get(uuid=to_room_uuid)
+
+        resp = {
+            'uuid': end_room.uuid,
+            'slug': end_room.slug,
+            'distance' : 0
+        }
+
+        if from_room_uuid == to_room_uuid:
+            return Response(resp)
         
         fw_path = []
         bw_path = []
@@ -43,24 +48,22 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
         while current_room.uuid != end_room.uuid:
             fw_path.append(current_room)
             current_room = current_room.previous_room.first()
+        fw_path.pop(0)
         fw_path.append(end_room)
         
         current_room = start_room
         while current_room.uuid != end_room.uuid:
             bw_path.append(current_room)
             current_room = current_room.next_room
+        bw_path.pop(0)
         bw_path.append(end_room)
 
-        resp = {
-            'uuid': end_room.uuid,
-            'slug': end_room.slug,
-            'distance' : 0
-        }
+        print(fw_path)  
+        print(bw_path)
 
         if self.crossed_garden(fw_path):
             resp["distance"] = -len(bw_path)
-        
-        if self.crossed_garden(bw_path):
+        elif self.crossed_garden(bw_path):
             resp["distance"] = len(fw_path)
 
         
