@@ -54,6 +54,7 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
         resp = {
             'uuid': end_room.uuid,
             'slug': end_room.slug,
+            'distance' : 0
         }
 
         if self.crossed_garden(fw_path):
