@@ -18,14 +18,15 @@ from org.permissions import HasOrganizationAPIKey
 class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated| AllowAny]
     lookup_field = 'uuid'
 
-    def compute_distance(self, path):
-        distance = 0
-        for i in range(1, len(path)):
-            distance += path[i].position - path[i-1].position
-        return distance
+    def crossed_garden(self, path):
+        for room in path:
+            if room.slug == "jardin":
+                return True
+        return False
+        
 
     @action(detail=False, methods=['get'])
     def distance(self, request):
@@ -50,17 +51,17 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
             current_room = current_room.next_room
         bw_path.append(end_room)
 
-        fw_dist = self.compute_distance(fw_path)
-        bw_dist = self.compute_distance(bw_path)- 800
-
         resp = {
             'uuid': end_room.uuid,
             'slug': end_room.slug,
         }
-        if abs(fw_dist) < abs(bw_dist):
-            resp["distance"] = fw_dist
-        else:
-            resp["distance"] =  bw_dist
+
+        if self.crossed_garden(fw_path):
+            resp["distance"] = -len(bw_path)
+        
+        if self.crossed_garden(bw_path):
+            resp["distance"] = len(fw_path)
+
         
         return Response(resp)
     
