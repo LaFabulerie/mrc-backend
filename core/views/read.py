@@ -47,9 +47,11 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
         while current_room.uuid != end_room.uuid:
             if(current_room.slug != "jardin"):
                 fw_path.append(current_room)
-            current_room = current_room.previous_room.first()
+            current_room = current_room.next_room
         fw_path.pop(0)
         fw_path.append(end_room)
+
+        print(fw_path)
         
         resp['distance'] = len(fw_path)
 
