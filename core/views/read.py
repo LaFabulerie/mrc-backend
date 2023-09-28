@@ -65,7 +65,7 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
         if not self.crossed_garden(fw_path):
             d1 = len(fw_path)
         
-        if self.crossed_garden(bw_path):
+        if not self.crossed_garden(bw_path):
             d2 = -len(bw_path)
 
         resp['distance'] = d1 if abs(d1) < abs(d2) else d2
