@@ -4,6 +4,8 @@ python /app/manage.py migrate
 
 python /app/manage.py import
 
+cp /app/media /app/static -r
+
 gunicorn mrc.wsgi:application -b 0.0.0.0:8000 -w 2 &
 
 
