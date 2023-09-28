@@ -22,8 +22,8 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
             if room.slug == "jardin":
                 return True
         return False
-        
 
+    
     @action(detail=False, methods=['get'])
     def distance(self, request):
         from_room_uuid = request.GET.get('from', None)
@@ -42,39 +42,65 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
             return Response(resp)
         
         fw_path = []
-        bw_path = []
 
         current_room = start_room
         while current_room.uuid != end_room.uuid:
-            fw_path.append(current_room)
+            if(current_room.slug != "jardin"):
+                fw_path.append(current_room)
             current_room = current_room.previous_room.first()
         fw_path.pop(0)
         fw_path.append(end_room)
         
-        current_room = start_room
-        while current_room.uuid != end_room.uuid:
-            bw_path.append(current_room)
-            current_room = current_room.next_room
-        bw_path.pop(0)
-        bw_path.append(end_room)
+        resp['distance'] = len(fw_path)
 
-        # print(fw_path)  
-        # print(bw_path)
+        return Response(resp)     
 
-        d1 = sys.maxsize
-        d2 = sys.maxsize
+    # @action(detail=False, methods=['get'])
+    # def distance(self, request):
+    #     from_room_uuid = request.GET.get('from', None)
+    #     to_room_uuid = request.GET.get('to', None)
 
-        if not self.crossed_garden(fw_path):
-            d1 = len(fw_path)
+    #     start_room = self.get_queryset().get(uuid=from_room_uuid)
+    #     end_room = self.get_queryset().get(uuid=to_room_uuid)
+
+    #     resp = {
+    #         'uuid': end_room.uuid,
+    #         'slug': end_room.slug,
+    #         'distance' : 0
+    #     }
+
+    #     if from_room_uuid == to_room_uuid:
+    #         return Response(resp)
         
-        if not self.crossed_garden(bw_path):
-            d2 = -len(bw_path)
+    #     fw_path = []
+    #     bw_path = []
+
+    #     current_room = start_room
+    #     while current_room.uuid != end_room.uuid:
+    #         fw_path.append(current_room)
+    #         current_room = current_room.previous_room.first()
+    #     fw_path.pop(0)
+    #     fw_path.append(end_room)
         
-        print(d1, d2)
+    #     current_room = start_room
+    #     while current_room.uuid != end_room.uuid:
+    #         bw_path.append(current_room)
+    #         current_room = current_room.next_room
+    #     bw_path.pop(0)
+    #     bw_path.append(end_room)
 
-        resp['distance'] = d1 if abs(d1) < abs(d2) else d2
+    #     d1 = sys.maxsize
+    #     d2 = sys.maxsize
 
-        return Response(resp)
+    #     if not self.crossed_garden(fw_path):
+    #         d1 = len(fw_path)
+        
+    #     if not self.crossed_garden(bw_path):
+    #         d2 = -len(bw_path)
+
+    #     resp['distance'] = d1 if abs(d1) < abs(d2) else d2
+
+    #     return Response(resp)
     
 
 
