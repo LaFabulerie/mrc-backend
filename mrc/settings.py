@@ -55,9 +55,6 @@ INSTALLED_APPS = [
     
 ]
 
-# if EXECUTION_MODE == 'STANDALONE':
-#     INSTALLED_APPS.append('demo')
-
 SITE_ID = 1
 
 MIDDLEWARE = [

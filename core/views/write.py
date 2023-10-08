@@ -65,13 +65,13 @@ def django_url_fetcher(url: str):
             }
 
     except Exception as e:
-        print("MEDIA SHIT", e)
         pass
 
     return default_url_fetcher(url)
 
 class CartViewSet(GenericViewSet):
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+    
     @action(detail=False, methods=['post'])
     def email(self, request, format=None):
         email = request.data.get('email', None)
@@ -111,7 +111,7 @@ class CartViewSet(GenericViewSet):
         msg.send()
         return Response({'status': 'ok'}, status=status.HTTP_200_OK)
 
-    # @action(detail=False, methods=['post'])
+
     @action(detail=False, methods=['post'])
     def pdf(self, request):
         cart = request.data.get('basket', {})

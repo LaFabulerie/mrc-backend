@@ -30,8 +30,6 @@ api_urlpatterns = [
     path('api/', include('org.urls')),
 ]
 
-# if settings.EXECUTION_MODE == 'STANDALONE':
-#     api_urlpatterns.append(path('api/', include('demo.urls')))
 
 urlpatterns = api_urlpatterns + [
     re_path(r'^api/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
