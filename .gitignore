@@ -5,6 +5,7 @@
 /db/*
 /media/
 /static/
+/core/static/videos/**/*.mp4
 *.xlsx
 .idea/
 !.env.example
