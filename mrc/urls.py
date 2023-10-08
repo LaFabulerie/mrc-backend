@@ -26,6 +26,7 @@ api_urlpatterns = [
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/auth/signup/', include('org.registration_urls')),
     path('api/client/', include('client.urls')),
+    path('api/feedback/', include('feedback.urls')),
     path('api/', include('core.urls')),
     path('api/', include('org.urls')),
 ]

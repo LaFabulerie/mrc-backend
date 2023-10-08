@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'org',
     'core',
     'client',
-    
+    'feedback',
 ]
 
 SITE_ID = 1
