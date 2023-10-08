@@ -1,0 +1,9 @@
+.info {
+    background-color: var(--orange-100);
+    border-radius: 20px;
+    position: relative;
+
+    &-close {
+        float: right;
+    }
+}

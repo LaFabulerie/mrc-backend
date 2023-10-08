@@ -1,0 +1,15 @@
+{% load static %}
+
+<html lang="fr">
+
+{% include 'website/head.html' %}
+
+<body class="{% block body_class %}{% endblock %}">
+
+    {% block body %}
+    {% endblock %}
+
+</body>
+
+</html>
+

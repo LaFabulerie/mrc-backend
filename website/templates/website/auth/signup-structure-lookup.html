@@ -1,0 +1,35 @@
+{% extends 'website/auth/base.html' %}
+{% load static %}
+{% block block_left %}
+
+      <section class="pt-4 pb-4 flex flex-column">
+
+        <div class="flex-grow-1">
+          <h2 class="text-6xl font-secondary text-color-secondary font-normal mb-4">Inscrivez-vous !</h2>
+          <h3 class=" font-bold mb-4">Sélectionner votre structure</h3>
+  
+          <div class="mb-4">
+            <a style="text-decoration: none;" href="{% url 'signup-structure-choose' %}">
+              <label for="recherche"></label>
+              <input type="search" id="recherche" name="recherche" placeholder="Rechercher votre structure" />
+            </a>
+          </div>
+  
+          <p class="text-xs font-bold mb-4">Votre structure n’est pas enregistrée ?</p>
+  
+          <a class="button button-secondary-outlined mb-4 w-full" href="{% url 'signup-structure-new' %}">
+            Ajouter ma structure
+          </a>
+        </div>
+
+        <div class="tunnel pt-4 pb-4 flex-shrink-0">
+          <div class="dot mr-2"></div>
+          <div class="dot current mr-2"></div>
+          <div class="dot mr-2"></div>
+        </div>
+
+      </section>
+    </div>
+
+{% endblock %}
+

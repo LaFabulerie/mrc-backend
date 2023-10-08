@@ -1,0 +1,60 @@
+{% extends 'website/auth/base.html' %}
+{% load static %}
+{% block block_left %}
+
+      <section class="py-4 flex flex-column">
+        
+        <div class="flex-grow-1">
+
+          <h2 class="text-6xl font-secondary text-color-secondary font-normal mb-4">Inscrivez-vous !</h2>
+          
+          <h3 class=" font-bold mb-4">Vos informations*</h3>
+          
+          <div class="flex mb-3">
+            <input class="mr-2 flex-grow-1" type="text" placeholder="Nom">
+            <input class="flex-grow-1" type="text" placeholder="Prénom">
+          </div>
+  
+          <div class="mb-3">
+            <input type="text" placeholder="Email">
+          </div>
+  
+          <div class="mb-3">
+            <input type="password" placeholder="Mot de passe">
+          </div>
+  
+          <div class="mb-3">
+            <input type="password" placeholder="Confirmer le mot de passe">
+          </div>
+  
+          <div class="flex align-items-center mt-2">
+            <input type="checkbox" id="newsletter">
+            <label class="text-bluegray-100 ml-3 text-xs" for="newsletter">
+              J’accepte de recevoir la Newsletter annuelle
+            </label>
+          </div>
+  
+          <div class="flex align-items-center mt-2">
+            <input type="checkbox" id="charte">
+            <label class="text-bluegray-100 ml-3 text-xs" for="charte">
+              J’accepte la charte de la Maison (re)connectée
+            </label>
+          </div>
+  
+          <a class="button button-secondary-outlined mt-4 w-full" href="{% url 'signup-structure-lookup' %}">
+            Suivant
+          </a>
+        </div>
+
+        <div class="tunnel pt-4 pb-4 flex-shrink-0">
+          <div class="dot current mr-2"></div>
+          <div class="dot mr-2"></div>
+          <div class="dot mr-2"></div>
+        </div>
+
+      </section>
+
+{% endblock %}
+
+
+

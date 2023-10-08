@@ -1,0 +1,297 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+
+{% block body %}
+
+  <header class="bg-primary h-1 pt-3 pb-3 relative">
+    <nav class="container flex justify-content-between align-items-center">
+
+      <a href="/">
+        <img src="{% static 'website/images/logo.svg' %}" alt="">
+      </a>
+
+      <div class="navbar flex text-2xl align-items-center font-secondary" id="navBar">
+        <a class="text-white mr-4 no-underline hover-underline" href="#quoi">Quoi ?</a>
+        <a class="text-white mr-4 no-underline hover-underline" href="#pourquoi">Pourquoi ?</a>
+        <a class="text-white mr-4 no-underline hover-underline" href="#participez">Participez ?</a>
+        <a class="text-white mr-4 no-underline hover-underline" href="#qui">Par qui ?</a>
+      </div>
+
+      <button class="button button-small button-secondary-outlined">
+        Contactez-nous
+      </button>
+
+      <a class="md:hidden" id="toggleMobileNav">
+        <i class="pi pi-bars text-white"></i>
+      </a>
+
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <!-- 
+      
+      QUOI
+      
+    -->
+
+    <div id="quoi" class="mt-4 flex flex-column justify-content-between align-items-center lg:flex-row pt-6">
+
+      <div class="lg:w-6">
+        <h1 class="text-6xl font-secondary text-color-secondary font-normal">Quoi ?</h1>
+        <h3 class="text-3xl font-secondary text-color-secondary mt-2">Découvrez un nouvel outil de médiation numérique
+        </h3>
+        <p class="text-l  font-normal mt-4 mb-4">
+          La Maison (re)connectée est un outil d’exploration, d’apprentissage ouvert et de médiation, pour découvrir des
+          services numériques à l’usage domestique. La maison promeut un numérique capacitant, frugal, inclusif et sûr.
+        </p>
+        <div class="mt-3 flex flex-wrap">
+          <button class="button button-secondary mr-2 mt-4">Télécharger la présentation</button>
+          <button class="button button-secondary-outlined mt-4">Recevoir la Newsletter</button>
+        </div>
+      </div>
+
+      <div class="lg:w-6 w-8 image mt-4 lg:mt-0">
+        <img src="{% static 'website/images/maison.png' %}" alt="Image">
+      </div>
+
+    </div>
+
+
+    <div class="mt-4 mt-8">
+
+      <p class=" text-l">
+        La Maison Re-connectée est en cours de codéveloppement. <strong>Elle sera déclinée sous :</strong>
+      </p>
+
+      <section class="mt-3">
+
+        <div class="flex flex-column md:flex-row justify-content-between align-items-center mt-6">
+          <div class="image w-10rem mr-6 flex-shrink-0">
+            <img src="{% static 'website/images/physique.svg' %}" alt="Image">
+          </div>
+          <div>
+            <h3 class="font-secondary text-color-secondary text-3xl">Version physique</h3>
+            <h4 class=" text-base mt-4">
+              Une version physique, qui peut être utilisée en autonomie ou guidée par un médiateur numérique :
+            </h4>
+            <p class=" text-base mt-4">
+              La maison (re)connectée est une maquette de maison. Elle est composée de pièces et
+              d’objets dont chacun d’eux est une métaphore d’une activité de la vie quotidienne. Pour chacune des
+              activités, des services numériques sont à découvrir. L’utilisateur navigue d’une pièce à l’autre en
+              explorant le dispositif comme une encyclopédie.
+            </p>
+          </div>
+        </div>
+
+
+        <div class="flex flex-column md:flex-row flex justify-content-between align-items-center mt-6">
+
+          <div class="image w-10rem mr-6 flex-shrink-0">
+            <img src="{% static 'website/images/itinerante.svg' %}" alt="Image">
+          </div>
+          <div>
+            <h3 class="font-secondary text-color-secondary text-3xl">Version itinérante</h3>
+            <h4 class=" text-base  mt-4">Une version itinérante qui offre une approche sensible et artistique :</h4>
+            <p class=" text-base mt-4">
+              En version itinérante, la maison (re)connectée se déplie comme un pop-up. A
+              l’intérieur de la maquette, des QR codes renvoient aux diﬀérents services associés aux objets. La
+              maquette peut être rangée dans une mallette et transportée facilement.
+            </p>
+          </div>
+
+        </div>
+
+
+
+        <div class="flex flex-column md:flex-row flex justify-content-between align-items-center mt-6">
+
+          <div class="image w-10rem mr-6 flex-shrink-0">
+            <img src="{% static 'website/images/ligne.svg' %}" alt="Image">
+          </div>
+          <div>
+            <h3 class="font-secondary text-color-secondary text-3xl">Version en ligne</h3>
+            <h4 class=" text-base mt-4">Une version en ligne accessible partout :</h4>
+            <p class=" text-base mt-4">
+              La version 100% web de la maison (re)connectée est une adaptation de la version
+              maquette sous forme numérique. Elle permet d’explorer les différentes pièces et usages associés afin
+              de découvrir des services numériques adaptés à nos besoins.
+            </p>
+          </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- 
+        
+        POURQUOI
+        
+      -->
+
+
+    <div id="pourquoi" class="mt-4 mt-8">
+
+      <h2 class="text-6xl font-secondary text-color-secondary font-normal mb-4">
+        Pourquoi, pour qui ?
+      </h2>
+
+      <div class="flex flex-column md:flex-row align-items-start">
+
+        <div class="lg:w-4 lg:mr-4 mb-4">
+          <p>
+            Les crises sanitaires, environnementales et sociales que nous traversons mettent en évidence l’importance de
+            l’accès aux services numériques depuis chez soi pour améliorer notre quotidien. Le numérique, bien que
+            controversé, offre des solutions pour répondre à nos besoins bien au-delà des services administratifs. Une
+            multitude de ressources sont disponibles pour améliorer notre alimentation, notre apprentissage, notre façon
+            de communiquer, et bien plus encore. Mais l’utilisation de l’outil informatique peut générer du stress. Il
+            est donc important d’équiper les médiateurs et leur permettre de focaliser sur les besoins des personnes
+            pour faciliter les échanges.
+          </p>
+        </div>
+
+        <div class="lg:w-8">
+          <div class="block">
+            <h3 class="font-secondary text-color-secondary text-xl">1. Découvrir des services numériques pour améliorer
+              son quotidien</h3>
+            <p class="mt-2">Fruit d’un travail de recherche et de sélection par des acteurs spécialistes, les services
+              numériques et locaux à découvrir en explorant la maison (re)connectée ont une réelle plus value pour les
+              utilisateurs. Les services sélectionnés sont accessibles et sûrs, renforçant ainsi la confiance des
+              utilisateurs dans les outils numériques.</p>
+          </div>
+          <div class="block">
+            <h3 class="font-secondary text-color-secondary text-xl mt-4">2. L’inclusion numérique pour tous</h3>
+            <p class="mt-2">La Maison (re)connectée privilégie les ressources locales pour les rendre plus
+              accessibles.Chaque maison installée sur un territoire prend en compte les spécificités locales, pour
+              répondre aux besoins des habitants et faire de la Maison (re)connectée un outil d’inclusion numérique pour
+              tous.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- 
+        
+        PARTICIPEZ
+        
+      -->
+
+
+    <div id="participez" class="mt-4 mt-8">
+
+      <h2 class="text-6xl font-secondary text-color-secondary font-normal mb-6">
+        Participez !
+      </h2>
+
+      <div class="flex flex-column md:flex-row align-items-start">
+
+        <div class="image lg:w-5 lg:mr-2">
+          <img src="{% static 'website/images/map.svg' %}" alt="Image">
+        </div>
+
+        <div class="lg:w-7">
+          <h3 class="font-secondary text-color-secondary text-3xl">Participez à un atelier collectif</h3>
+
+          <p class="mt-4">
+            Ouvert aux professionnels de la médiation numérique et de l’accompagnement aux services du quotidien
+            (alimentation, emploi, santé, formation…) ces ateliers permettront de s’approprier ce dispositif de
+            médiation centré sur les usages numériques pratiqués au quotidien.
+            Les ateliers d’expérimentation de la Maison (re)connectée commenceront en septembre 2023 ! Dates à venir…
+          </p>
+          <button class="button button-small button-secondary-outlined mt-4">
+            Contactez-nous !
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- 
+        
+        PAR QUI
+        
+      -->
+
+    <div id="qui" class="mt-4 mt-8">
+
+      <h2 class="text-6xl font-secondary text-color-secondary font-normal mt-4">Par qui !</h2>
+
+
+      <h3 class="font-secondary text-color-secondary text-2xl mt-5">Une création collective élaborée autour de deux
+        territoires</h3>
+
+      <p class="mt-4">
+        Pour bâtir ce projet, une équipe pluridisciplinaire a été réunie autour de la Fabulerie, afin de
+        d’expérimenter ce projet sur deux territoires : la métropole Aix-Marseille Provence et le département de la
+        Lozère. Cette expérimentation va permettre de mesurer les impacts de ce dispositif sur des territoires et des
+        publics variés.
+      </p>
+    </div>
+
+
+
+    <div class="flex flex-wrap mt-6">
+      <div class="mr-5">
+        <p class=" font-bold mb-3">Porteur de projet</p>
+        <img class="w-8rem" src="{% static 'website/logos/image 27.jpg' %}" alt="">
+      </div>
+
+      <div>
+        <p class=" font-bold mb-3">Partenaires territoriaux</p>
+        <div class="flex flex-wrap align-items-start">
+          <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 28.jpg' %}" alt="">
+          <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 29.jpg' %}" alt="">
+          <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 30.jpg' %}" alt="">
+          <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 31.jpg' %}" alt="">
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="mt-6">
+      <p class=" font-bold mb-3">Équipe co-conception et expertise</p>
+      <div class="flex flex-wrap align-items-start mt-4">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 32.jpg' %}" alt="">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 33.jpg' %}" alt="">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 34.jpg' %}" alt="">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 35.jpg' %}" alt="">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 36.jpg' %}" alt="">
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <p class=" font-bold mb-3">Les soutiens</p>
+      <div class="flex flex-wrap align-items-start mt-4">
+
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 38.jpg' %}" alt="">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 39.jpg' %}" alt="">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 40.jpg' %}" alt="">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 41.jpg' %}" alt="">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 42.jpg' %}" alt="">
+        <img class="mr-4 w-8rem mb-4" src="{% static 'website/logos/image 43.jpg' %}" alt="">
+      </div>
+    </div>
+
+    </div>
+
+    </div>
+
+
+  </main>
+
+  <footer>
+    {% include 'website/footer.html' %}
+  </footer>
+
+{% endblock %}

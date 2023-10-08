@@ -29,6 +29,7 @@ api_urlpatterns = [
     path('api/feedback/', include('feedback.urls')),
     path('api/', include('core.urls')),
     path('api/', include('org.urls')),
+    path('', include('website.urls')),
 ]
 
 
@@ -38,4 +39,4 @@ urlpatterns = api_urlpatterns + [
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-print(f"\n{10*'*'} ENVIRONMENT : {settings.EXECUTION_MODE} - DEBUG : {settings.DEBUG} {10*'*'} \n".upper())
+# print(f"\n{10*'*'} ENVIRONMENT : {settings.EXECUTION_MODE} - DEBUG : {settings.DEBUG} {10*'*'} \n".upper())

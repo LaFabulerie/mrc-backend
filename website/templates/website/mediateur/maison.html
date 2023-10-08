@@ -1,0 +1,89 @@
+{% extends 'website/mediateur/base.html' %}
+{% load static %}
+
+{% block content %}
+
+        
+        <section class="mt-8">
+            <h2 class="text-4xl font-secondary text-color-secondary font-normal mt-4">
+                Qu'est ce que la Maison (re)connectée ?
+            </h2>
+            
+            <p class=" text-l mt-5 mb-5">
+                La Maison (re)connectée est un outil libre et accessible. Elle peut être
+                fabriquée à l'aide de plans, de recommandations matérielles et dans une manufacture de proximité.
+            </p>
+            
+            <video class="w-full" controls>
+                <source src="{% static 'videos/intro.mp4' %}" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture de vidéos au format HTML5.
+            </video>
+        </section>
+        
+        
+        <section>
+            
+            <div class="flex flex-column md:flex-row justify-content-between align-items-start mt-8">
+                
+                <div class="mr-4">
+                    <h2 class="text-4xl font-secondary text-color-secondary font-normal">Comment fabriquer votre Maison (re)connectée ?</h2>
+                    <p class=" text-base mt-2">
+                        Pour construire votre Maison (re)connectée, téléchargez les plans en
+                        consultant nos recommandations. La construction peut être réalisée par une manufacture de
+                        proximité (consultez la liste des manufactures lien)
+                    </p>
+                    
+                    <button class="button button-secondary mt-4 mb-4">
+                        <i class="pi pi-download"></i>
+                        Télécharger les plans
+                    </button>
+                    
+                </div>
+                
+                <div class="block-image flex-shrink-0">
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+            
+            <div class="flex flex-column md:flex-row justify-content-between align-items-start mt-5">
+                
+                <div class="mr-4">
+                    <h2 class="text-4xl font-secondary text-color-secondary font-normal">Comment fabriquer votre Maison (re)connectée ?</h2>
+                    <p class=" text-base mt-2">
+                        Pour construire votre Maison (re)connectée, téléchargez les plans en
+                        consultant nos recommandations. La construction peut être réalisée par une manufacture de
+                        proximité (consultez la liste des manufactures lien)
+                    </p>
+                    
+                    <div class="mt-4 mb-4 flex flex-wrap ">
+                        <button class="button button-secondary mt-5 mr-4">
+                            <i class="pi pi-download"></i>
+                            Télécharger le manuel d'installation
+                        </button>
+                        
+                        <button class="button button-secondary-outlined mt-5">
+                            <i class="pi pi-cog"></i>
+                            Gérer le contenu de mon application
+                        </button>
+                        
+                    </div>
+                    
+                </div>
+                
+                <div class="block-image flex-shrink-0">
+                    
+                </div>
+                
+                
+                
+            </div>
+            
+        </section>
+        
+{% endblock %}
+        
+        

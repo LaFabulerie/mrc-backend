@@ -1,0 +1,147 @@
+{% extends 'website/mediateur/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    <h2 class="text-4xl font-secondary text-color-secondary font-normal mt-8">Mon compte</h2>
+    
+    <p class=" text-xl mt-6">
+      Bonjour Clémentine, voici les informations et celle de votre structure. Vous
+      pouvez les modifier à tout moment depuis votre compte.
+    </p>
+
+
+    <!-- Profil -->
+    
+    <section class="w-10 form">
+      
+      <h3 class="font-secondary text-3xl mt-6">Vos informations</h3>
+      
+      <div class="flex flex-column md:flex-row">
+        <div class="mt-2 flex-1 mr-4">
+          <label class="text-sm mt-3">Nom</label>
+          <input class="p-2 mr-1 mt-2 mb-2" readonly class="p-2" type="text" value="Nom" />
+        </div>
+        <div class="mt-2 flex-1">
+          <label class="text-sm mt-3">Prénom</label>
+          <input class="p-2 mr-1 mt-2 mb-2" readonly type="text" value="Prénom" />
+        </div>
+      </div>
+      
+      <div class="flex flex-column md:flex-row">
+        <div class="mt-2 flex-1 mr-4">
+          <label class=" text-sm mt-3">Email</label>
+          <input class="p-2 mr-1 mt-2 mb-2" readonly type="text" value="p.martin@gmail.com" />
+        </div>
+        <div class="mt-2 flex-1">  
+          <label class=" text-sm mt-3">Mot de passe</label>
+          <input class="p-2 mr-1 mt-2 mb-2" readonly type="text" value="************" />
+        </div>
+      </div>
+      
+      <button id="toggleInputButton1" class="button button-secondary-outlined mt-4">
+        <i class="pi pi-pencil"></i>
+        Modifier
+      </button>
+
+      </div>
+      
+    </section>
+
+
+    <!-- Structure -->
+    
+    <section class="w-10 form">
+      
+      <h3 class="font-secondary text-3xl mt-6">Les informations de votre structure</h3>
+      
+      <div class="flex flex-column md:flex-row">
+        <div class="mt-2 flex-1 mr-4">
+          <label class="text-sm mt-3">Nom de votre structure</label>
+          <input class="p-2 mr-1 mt-2 mb-2" type="text" value="Département du Gard" />
+        </div>
+        <div class="mt-2 flex-1">
+          <label class="text-sm mt-3">Adresse de votre structure</label>
+          <input class="p-2 mr-1 mt-2 mb-2" type="text" value="57 rue de la Liberté" />
+        </div>
+      </div>
+      
+      <div class="flex flex-column md:flex-row">
+        <div class="mt-2 flex-1 mr-4">
+          <label class="text-sm mt-3">Email de votre structure</label>
+          <input class="p-2 mr-1 mt-2 mb-2" type="text" value="p.martin@gmail.com" />
+        </div>
+        <div class="mt-2 flex-1">
+          <label class="text-sm mt-3">Téléphone de votre structure</label>
+          <input class="p-2 mr-1 mt-2 mb-2" type="text" value="09.78.34.54.21" />
+        </div>
+      </div>
+      
+      <div class="mt-2">
+        <label class="text-sm mt-3">Type de maison (re)connectée</label>
+        <input class="p-2 mr-1 mt-2 mb-2" type="text" value="Version physique" />
+      </div>
+      
+      <div class="mr-2">
+        
+        <button class="button button-secondary-outlined mt-4 mr-2">
+          Annuler
+        </button>
+        
+        <button class="button button-secondary mt-4">
+          Valider
+        </button>
+        
+      </div>
+      
+    </section>
+
+
+    <!-- Affichage sur la carte -->
+    
+    <section>
+      
+      <div class="flex justify-content-start mt-6">
+        <label class="toggle-label font-bold mr-2" for="toggle-switch">
+          Je souhaite apparaître sur la carte intéractive
+        </label>
+        <input class="p-2 mr-1 mt-2 mb-2 switch" type="checkbox" id="switch" />
+        <label for="switch">Toggle</label>
+      </div>
+      
+      <p class="mt-4">
+        Notre carte interactive visible par tous les médiateurs, répertorie les structures qui seront affichées, vos informations personnelles resteront confidentielles.
+      </p>
+      
+      <h3 class="text-3xl font-secondary  mt-6 mb-3">Le contenu de votre application</h3>
+      
+      <p class="mt-25">
+        Vous pouvez modifier le contenu de votre application ici (les fiches usages,
+        mode médiation guidées ou quête)
+      </p>
+      
+      
+      <a class="button button-secondary mt-4" href="{% url 'contenu' %}">
+        <i class="pi pi-cog"></i>
+        Gérer le contenu de votre application
+      </a>
+      
+    </section>
+    
+    <hr class="my-6 border-primary">
+    
+    <section>
+      
+      <h3 class="text-3xl font-secondary mb-3">Supprimer votre compte</h3>
+      
+      <p class="mt-25">Vous pouvez supprimer votre compte à tout moment.</p>
+      
+      <button class="button button-small button-secondary-outlined mt-4">
+        <i class="pi pi-trash"></i>
+        Supprimer votre compte
+      </button>
+      
+    </section>
+    
+{% endblock %}

@@ -1,0 +1,24 @@
+.form {
+
+    input[type=text] {
+        border-radius: 5px;
+        width: 100%;
+        height: 45px;
+        border: none;
+        color: var(--text-color);
+        outline: none;
+        border: 1px solid var(--gray-200);
+        font-weight: 600;
+        font-size: 16px;
+        
+        &[readonly] {
+            background: var(--gray-200);
+            color: var(--gray-900)
+        }
+    }
+
+    input::placeholder {
+        color: var(--text-color-secondary);
+    }
+}
+
