@@ -43,6 +43,9 @@ class Answer(models.Model):
     text = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ("-created_at",)
+
 @receiver(post_save, sender=Answer)
 def save_answer(sender, instance, **kwargs):
     if instance.question and not instance.question_text:
