@@ -1,0 +1,31 @@
+Quel est votre âge ?;radio;False;1;Moins de 18
+Quel est votre âge ?;radio;False;1;18 et 26
+Quel est votre âge ?;radio;False;1;26 et 40
+Quel est votre âge ?;radio;False;1;40 et 60
+Quel est votre âge ?;radio;False;1;60 et plus
+Pensez vous que le dispositif à de l'intérêt ?  (Intérêt du dispositif et des objectifs);radio;True;2;Non, pas du tout
+Pensez vous que le dispositif à de l'intérêt ?  (Intérêt du dispositif et des objectifs);radio;True;2;Pas vraiment
+Pensez vous que le dispositif à de l'intérêt ?  (Intérêt du dispositif et des objectifs);radio;True;2;Oui, un peu
+Pensez vous que le dispositif à de l'intérêt ?  (Intérêt du dispositif et des objectifs);radio;True;2;Oui, tout à fait
+Avez-vous découvert des services utiles à votre vie quotidienne ? (Utilité);radio;True;3;Non, pas du tout
+Avez-vous découvert des services utiles à votre vie quotidienne ? (Utilité);radio;True;3;Pas vraiment
+Avez-vous découvert des services utiles à votre vie quotidienne ? (Utilité);radio;True;3;Oui, un peu
+Avez-vous découvert des services utiles à votre vie quotidienne ? (Utilité);radio;True;3;Oui, tout à fait
+Réutiliserez vous ce dispositif ? Le recommanderiez vous à votre entourage ?  (satisfaction);radio;True;4;Non, pas du tout
+Réutiliserez vous ce dispositif ? Le recommanderiez vous à votre entourage ?  (satisfaction);radio;True;4;Pas vraiment
+Réutiliserez vous ce dispositif ? Le recommanderiez vous à votre entourage ?  (satisfaction);radio;True;4;Oui, un peu
+Réutiliserez vous ce dispositif ? Le recommanderiez vous à votre entourage ?  (satisfaction);radio;True;4;Oui, tout à fait
+Pensez vous que ce dispositif est accessible à tous.te.s ?;radio;True;5;Non, pas du tout
+Pensez vous que ce dispositif est accessible à tous.te.s ?;radio;True;5;Pas vraiment
+Pensez vous que ce dispositif est accessible à tous.te.s ?;radio;True;5;Oui, un peu
+Pensez vous que ce dispositif est accessible à tous.te.s ?;radio;True;5;Oui, tout à fait
+Pensez vous que le dispositif est une façon ludique de découvrir des services numériques ou locaux ?;radio;True;6;Non, pas du tout
+Pensez vous que le dispositif est une façon ludique de découvrir des services numériques ou locaux ?;radio;True;6;Pas vraiment
+Pensez vous que le dispositif est une façon ludique de découvrir des services numériques ou locaux ?;radio;True;6;Oui, un peu
+Pensez vous que le dispositif est une façon ludique de découvrir des services numériques ou locaux ?;radio;True;6;Oui, tout à fait
+Les services que vous avez découvert concernent :;checkbox;True;7;Santé et bien-être
+Les services que vous avez découvert concernent :;checkbox;True;7;Formation et apprentissage
+Les services que vous avez découvert concernent :;checkbox;True;7;Environnement et impact écologique
+Les services que vous avez découvert concernent :;checkbox;True;7;Techniques et savoir-faire
+Les services que vous avez découvert concernent :;checkbox;True;7;Administratif et organisation
+Un message à nous faire passer ?;text;False;8;
