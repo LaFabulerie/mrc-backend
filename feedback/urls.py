@@ -6,5 +6,6 @@ router = routers.SimpleRouter()
 router.register(r'feedbacks', FeedbackViewSet, basename='feedbacks')
 router.register(r'questions', QuestionViewset, basename='questions')
 router.register(r'answers', AnswerViewSet, basename='answers')
+router.register(r'answerchoices', AnswerChoiceViewset, basename='answerchoices')
 
 urlpatterns = router.urls

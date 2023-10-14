@@ -3,21 +3,26 @@ from rest_framework.permissions import IsAuthenticated
 from core.permissions import IsLocalAccess
 from org.permissions import HasOrganizationAPIKey
 
-from .models import Feedback, Question, Answer
-from .serializers import FeedbackSerializer, QuestionSerializer, AnswerSerializer
+from .models import Feedback, Question, Answer, AnswerChoice
+from .serializers import FeedbackSerializer, QuestionSerializer, AnswerSerializer, AnswerChoiceSerializer
 
-class FeedbackViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class FeedbackViewSet(viewsets.ModelViewSet):
     serializer_class = FeedbackSerializer
     queryset = Feedback.objects.all()
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
 
 
-class QuestionViewset(viewsets.ReadOnlyModelViewSet):
+class AnswerChoiceViewset(viewsets.ModelViewSet):
+    serializer_class = AnswerChoiceSerializer
+    queryset = AnswerChoice.objects.all()
+    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+
+class QuestionViewset(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = Question.objects.all()
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
 
-class AnswerViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class AnswerViewSet(viewsets.ModelViewSet):
     serializer_class = AnswerSerializer
     queryset = Answer.objects.all()
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
