@@ -3,22 +3,15 @@ from taggit.serializers import (TagListSerializerField, TaggitSerializer)
 from rest_flex_fields import FlexFieldsModelSerializer
 from .models import *
 
-class AreaSerializer(FlexFieldsModelSerializer):
-    class Meta:
-        model = Area
-        fields = "__all__"
-
 
 class DigitalServiceSerializer(FlexFieldsModelSerializer):
     use_id = serializers.PrimaryKeyRelatedField(write_only=False, queryset=DigitalUse.objects.all(), source='use')
-    area_id = serializers.PrimaryKeyRelatedField(write_only=False, queryset=Area.objects.all(), source='area')
     
     class Meta:
         model = DigitalService
         fields = "__all__"
         expandable_fields = {
             'use': ('core.DigitalUseSerializer', {'read_only':True}),
-            'area': ('core.AreaSerializer', {'read_only':True}),
         }
               
 

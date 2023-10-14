@@ -9,8 +9,6 @@ from allauth.account.utils import user_pk_to_url_str
 from allauth.account.adapter import get_adapter
 
 from django.conf import settings
-from core.serializers import AreaSerializer
-from core.models import Area
 from .models import Organization, OrganizationAPIKey
 from django.utils import timezone
 
@@ -68,10 +66,6 @@ class APIKeySerializer(FlexFieldsModelSerializer):
         exclude = ('expiry_date', 'hashed_key',)
 
 class OrganizationSerializer(FlexFieldsModelSerializer):
-    area = AreaSerializer(read_only=True)
-    area_id = serializers.PrimaryKeyRelatedField(write_only=False, queryset=Area.objects.all(), source='area')
-
-
     class Meta:
         model = Organization
         fields = "__all__"

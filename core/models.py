@@ -100,19 +100,7 @@ class DigitalUse(models.Model):
 
     class Meta:
         verbose_name = 'Usage numérique'
-        verbose_name_plural = 'Usages numériques'   
-    
-
-class Area(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    name = models.CharField(max_length=500)
-    
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Zone d\'activité'
-        verbose_name_plural = 'Zones d\'activité'
+        verbose_name_plural = 'Usages numériques'
     
 
 class DigitalService(models.Model):
@@ -120,23 +108,14 @@ class DigitalService(models.Model):
     title = models.CharField(max_length=500)
     slug = AutoSlugField(populate_from='title', unique=True)
     description = models.TextField(blank=True, null=True)
-    url = models.URLField(max_length=500, blank=True, null=True)
-    area = models.ForeignKey(Area, blank=True, null=True, on_delete=models.SET_NULL, related_name='services')
+    url = models.CharField(max_length=500, blank=True, null=True)
+    scope = models.CharField(max_length=500, blank=True, null=True)
     use = models.ForeignKey(DigitalUse, blank=True, null=True, on_delete=models.CASCADE, related_name='services')
-    
+    contact = models.TextField(blank=True, null=True)
+
     def __str__(self):
         return self.title
-    
+  
     class Meta:
         verbose_name = 'Service numérique'
         verbose_name_plural = 'Services numériques'
-    
-    
-class DigitalServiceContact(models.Model):
-    address = models.CharField(max_length=500)
-    phone = models.CharField(max_length=50)
-    service = models.ForeignKey(DigitalService, on_delete=models.CASCADE, related_name='contacts')
-    
-    class Meta:
-        verbose_name = 'Contact'
-        verbose_name_plural = 'Contacts'

@@ -79,15 +79,8 @@ class DigitalServiceAdmin(admin.ModelAdmin):
     def items_list(self, obj):
         return ", ".join([i.name for i in obj.use.items.all()])
 
-    list_display = ('title', 'uuid', 'use', 'items_list', 'area')
+    list_display = ('title', 'uuid', 'use', 'items_list', 'scope')
     search_fields = ('title', 'uuid',)
-    inlines = [DigitalServiceContactInline]
-
-
-@admin.register(Area)
-class AreaAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
     
 admin.site.unregister(Tag)
 @admin.register(Tag)

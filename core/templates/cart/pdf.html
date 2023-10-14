@@ -23,7 +23,7 @@
 
   <div class="flex flex-column border-2 border-round p-4 shadow-2"
   style="border-color: #ff5738;color: #1C096B;margin-bottom:10px;border-radius:5px">
-          <span class="font-bold">{{ service.title }}{% if service.area %} - <i class="pi pi-map-marker mr-2"></i>{{service.area.name}}{% endif %}</span>
+          <span class="font-bold">{{ service.title }}{% if service.scope %} - <i class="pi pi-map-marker mr-2"></i>{{service.scope}}{% endif %}</span>
           <div style="margin-top: 15px;">
             {{ service.description|safe }}
           </div>
