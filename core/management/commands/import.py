@@ -37,34 +37,5 @@ class Command(BaseCommand):
                         light_ctrl=int(item_light_ctrl) if item_light_ctrl else None,
                         light_pin=item_light_pin
                     )
-                    
-                try:
-                    use = DigitalUse.objects.get(uuid=use_uuid)
-                except DigitalUse.DoesNotExist:
-                    use = DigitalUse.objects.create(title=use_name, description=use_description, uuid=use_uuid)
-                    use.items.add(item)
-                    use.save()
-                
-                clean_tags = use_tags_raw.split(';')
-                use.tags.add(*clean_tags)
-        
-        service_purged = False
-        with open('data/services.csv') as f:
-            csv_reader = csv.reader(f, delimiter=',')
-            next(csv_reader)
-            for row in csv_reader:
-                use_name, use_uuid, area_name, service_name, service_description, service_url = row
-                
-                area, created = Area.objects.get_or_create(name=area_name)
-                if not created and not service_purged:
-                    area.services.all().delete()
-                    service_purged = True
-                
-                service = DigitalService.objects.create(
-                    title=service_name,
-                    description=service_description,
-                    area=area,
-                    url=service_url,
-                    use=DigitalUse.objects.get(uuid=use_uuid)
-                )
+
                 

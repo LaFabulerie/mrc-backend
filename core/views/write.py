@@ -1,11 +1,13 @@
+import csv
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin
-from core.models import DigitalUse, DigitalService, Area
-from core.serializers import DigitalUseSerializer, DigitalServiceSerializer, AreaSerializer
+from core.models import DigitalUse, DigitalService, Item
+from core.serializers import DigitalUseSerializer, DigitalServiceSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
 from core.permissions import IsLocalAccess
 from org.permissions import HasOrganizationAPIKey
 from django.conf import settings
@@ -25,15 +27,13 @@ class DigitalUseWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMix
     queryset = DigitalUse.objects.all()
     serializer_class = DigitalUseSerializer
     permission_classes = [IsAuthenticated]
+    lookup_url_kwarg = 'uuid'
+    lookup_field = 'uuid'
+
 
 class DigitalServiceWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = DigitalService.objects.all()
     serializer_class = DigitalServiceSerializer
-    permission_classes = [IsAuthenticated]
-
-class AreaWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
-    queryset = Area.objects.all()
-    serializer_class = AreaSerializer
     permission_classes = [IsAuthenticated]
 
 
@@ -141,3 +141,71 @@ class CartViewSet(GenericViewSet):
         )
 
         return response
+    
+class ImportDigitalServiceApiView(APIView):
+    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+    def post(self, request, format=None):
+        file = request.FILES['import[]']
+        reader = csv.reader(file.read().decode('utf-8').splitlines())
+        next(reader)
+        # "USAGE",
+        # "IDENTIFIANT USAGE",
+        # "DESCRIPTION",
+        # "TAGS USAGE",
+        # "OBJET",
+        # "IDENTIFIANT OBJET",
+        # "PIECE",
+        # "IDENTIFIANT PIECE",
+        # "TERRITOIRE",
+        # "TITRE SERVICE",
+        # "IDENTIFIANT SERVICE",
+        # "DESC. SERVICE",
+        # "URL SERVICE",
+        # "CONTACT SERVICE",
+        messages = []
+        rows = []
+        for row in reader:
+            use_name, use_uuid, use_description, use_tags_raw,\
+            item_name, item_uuid, room_name, room_uuid, scope, service_title,\
+            service_uuid, service_desc, service_url, service_contact  = row
+            
+            if service_uuid:
+                service = DigitalService.objects.filter(uuid=service_uuid).first()
+                if service:
+                    messages.append(f"Le service «{service_title}» de l'usage «{service.use.title}» existe déjà. Veuillez le supprimer avant de réimporter le fichier.")
+                    continue
+            rows.append(row)
+        
+        if len(messages) > 0:
+            return Response({'status': 'error', 'messages': messages}, status=status.HTTP_400_BAD_REQUEST)
+        
+        for row in rows:
+            use_name, use_uuid, use_description, use_tags_raw,\
+            item_name, item_uuid, room_name, room_uuid, scope, service_title, service_uuid, service_desc, service_url, service_contact  = row
+
+            item = Item.objects.filter(uuid=item_uuid).first()
+
+            use = DigitalUse.objects.filter(uuid=use_uuid).first()
+            if not use:
+                use = DigitalUse.objects.create(
+                    uuid=use_uuid,
+                    title=use_name,
+                    description=use_description
+                )
+                use.items.add(item)
+                use.tags.add(*use_tags_raw.split(';'))
+
+            service_data = {
+                'title': service_title,
+                'description': service_desc,
+                'url': service_url,
+                'scope': scope,
+                'contact': service_contact,
+                'use': use,
+            }
+            if service_uuid:
+                service_data['uuid'] = service_uuid
+            
+            service = DigitalService.objects.create(**service_data)
+
+        return Response({'status': 'ok'}, status=status.HTTP_200_OK)

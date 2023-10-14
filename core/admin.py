@@ -20,6 +20,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ('uuid', 'name', 'slug', 'room', 'image_exits', 'light_ctrl', 'light_pin')
     list_filter = ('room',)
     list_editable = ('room', 'light_ctrl', 'light_pin')
+    search_fields = ('name', 'uuid')
 
 class ItemInline(admin.TabularInline):
     model = Item
@@ -44,7 +45,7 @@ class RoomAdmin(admin.ModelAdmin):
     get_previous_room.short_description = 'Pièce précédente'
 
     list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'get_previous_room', 'next_room', 'position')
-    search_fields = ('name',)
+    search_fields = ('name', 'uuid')
     list_editable = ('main_color', 'position')
     inlines = [ItemInline]
     
@@ -65,13 +66,8 @@ class DigitalUseAdmin(admin.ModelAdmin):
     service_count.short_description = 'Nb services'
 
     list_display = ('title', 'uuid', 'tags_list', 'items_list', 'service_count')
-    search_fields = ('title',)
+    search_fields = ('title', 'uuid',)
     filter_horizontal = ('items',)
-
-
-class DigitalServiceContactInline(admin.TabularInline):
-    model = DigitalServiceContact
-    extra = 0
 
 @admin.register(DigitalService)
 class DigitalServiceAdmin(admin.ModelAdmin):
