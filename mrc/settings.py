@@ -51,7 +51,6 @@ INSTALLED_APPS = [
      
     'org',
     'core',
-    'client',
     'feedback',
     'website',
 ]
