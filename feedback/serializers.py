@@ -2,10 +2,7 @@ from rest_framework import serializers
 from .models import *
 
 
-class FeedbackSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Feedback
-        fields = "__all__"
+
 
 class AnswerChoiceSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,10 +17,23 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class AnswerSerializer(serializers.ModelSerializer):
+    question = QuestionSerializer(read_only=True)
 
     feedback_id = serializers.PrimaryKeyRelatedField(source='feedback', queryset=Feedback.objects.all(), write_only=True)
     question_id = serializers.PrimaryKeyRelatedField(source='question', queryset=Question.objects.all(), write_only=True)
 
     class Meta:
         model = Answer
-        fields = ["feedback_id", "question_id", "choice", "text"]
+        exclude = ['feedback']
+
+
+class FeedbackSerializer(serializers.ModelSerializer):
+    repr = serializers.SerializerMethodField()
+    answers = AnswerSerializer(many=True, read_only=True)
+
+    def get_repr(self, obj):
+        return str(obj)
+    
+    class Meta:
+        model = Feedback
+        fields = "__all__"

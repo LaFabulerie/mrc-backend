@@ -1,13 +1,15 @@
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.utils import timezone
+import zoneinfo
 
 class Feedback(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return "Feedback du {}".format(self.created_at.strftime("%d/%m/%Y à %Hh%M"))
+        paris_tz = zoneinfo.ZoneInfo("Europe/Paris")
+        return "Feedback du {}".format(self.created_at.astimezone(paris_tz).strftime("%d/%m/%Y à %H:%M"))
     
     class Meta:
         ordering = ("-created_at",)
@@ -44,7 +46,7 @@ class Answer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ("-created_at",)
+        ordering = ("question__order", 'created_at')
 
 @receiver(post_save, sender=Answer)
 def save_answer(sender, instance, **kwargs):
