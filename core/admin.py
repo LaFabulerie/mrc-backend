@@ -44,9 +44,9 @@ class RoomAdmin(admin.ModelAdmin):
         return None
     get_previous_room.short_description = 'Pièce précédente'
 
-    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'get_previous_room', 'next_room', 'position')
+    list_display = ('uuid', 'name', 'slug', 'main_color', 'video_exits', 'get_previous_room', 'next_room')
     search_fields = ('name', 'uuid')
-    list_editable = ('main_color', 'position')
+    list_editable = ('main_color', 'next_room')
     inlines = [ItemInline]
     
 

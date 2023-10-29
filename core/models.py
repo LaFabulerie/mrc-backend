@@ -18,7 +18,7 @@ class Room(models.Model):
 
     # light_pin = models.IntegerField(verbose_name="Numéro de la broche du ruban LED", null=True, blank=True)
 
-    position = models.IntegerField(verbose_name="Position", default=0)
+    # position = models.IntegerField(verbose_name="Position", default=0)
 
     next_room = models.ForeignKey('self', verbose_name="Pièce suivante", blank=True, null=True, on_delete=models.SET_NULL, related_name='previous_room')
 
@@ -27,7 +27,6 @@ class Room(models.Model):
     
     class Meta:
         verbose_name = 'Pièce'
-        ordering = ['position']
 
 
 @receiver(pre_save, sender=Room)
