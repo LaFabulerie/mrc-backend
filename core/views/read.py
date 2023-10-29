@@ -12,6 +12,8 @@ from core.permissions import IsLocalAccess
 from org.permissions import HasOrganizationAPIKey
 import sys
 
+from core.import_export import export_services
+
 
 class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = Room.objects.all()
@@ -107,39 +109,5 @@ class ExportDigitalServiceApiView(APIView):
         uuids = request.data['uuids']
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="export.csv"'
-        writer = csv.writer(response)
-        writer.writerow([
-            "USAGE",
-            "IDENTIFIANT USAGE",
-            "DESCRIPTION",
-            "TAGS USAGE",
-        	"OBJET",
-            "IDENTIFIANT OBJET",
-            "PIECE",
-            "IDENTIFIANT PIECE",
-            "TERRITOIRE",
-            "TITRE SERVICE",
-            "IDENTIFIANT SERVICE",
-            "DESC. SERVICE",
-            "URL SERVICE",
-            "CONTACT SERVICE",															
-        ])
-        digital_services = DigitalService.objects.filter(uuid__in=uuids)
-        for digital_service in digital_services:
-            writer.writerow([
-                digital_service.use.title,
-                digital_service.use.uuid,
-                digital_service.use.description,
-                ";".join([t.name for t in digital_service.use.tags.all()]),
-                digital_service.use.items.all().first().name,
-                digital_service.use.items.all().first().uuid,
-                digital_service.use.items.all().first().room.name,
-                digital_service.use.items.all().first().room.uuid,
-                digital_service.scope,
-                digital_service.title,
-                digital_service.uuid,
-                digital_service.description,
-                digital_service.url,
-                digital_service.contact,
-            ])
+        export_services(response, uuids)
         return response
