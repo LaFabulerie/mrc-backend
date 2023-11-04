@@ -16,5 +16,4 @@ urlpatterns = router.urls + [
     path('r/tags/', TagApiView.as_view(), name='r-tags'),
     path('r/export/', ExportDigitalServiceApiView.as_view(), name='r-export'),
     path('w/import/', ImportDigitalServiceApiView.as_view(), name='w-import'),
-    
 ]

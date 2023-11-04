@@ -73,6 +73,8 @@ class DigitalUseAdmin(admin.ModelAdmin):
 class DigitalServiceAdmin(admin.ModelAdmin):
 
     def items_list(self, obj):
+        if obj.use == None:
+            return "Rattaché à aucun usage"
         return ", ".join([i.name for i in obj.use.items.all()])
 
     list_display = ('title', 'uuid', 'use', 'items_list', 'scope')

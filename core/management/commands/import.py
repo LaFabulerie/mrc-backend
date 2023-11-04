@@ -30,8 +30,8 @@ class Command(BaseCommand):
                         main_color=room_color,
                     )
 
-                    if next_room_uuid:
-                        next_rooms[room_uuid] = next_room_uuid
+                if next_room_uuid:
+                    next_rooms[room_uuid] = next_room_uuid
                 
                 try:
                     item = Item.objects.get(uuid=item_uuid)
@@ -53,5 +53,6 @@ class Command(BaseCommand):
                 except Room.DoesNotExist:
                     pass
         
-        # with open('data/services.csv') as fd:
-        #     import_services(fd)
+        with open('data/services.csv') as fd:
+            import_services(fd)
+
