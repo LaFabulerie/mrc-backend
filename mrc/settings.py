@@ -8,9 +8,9 @@ env.read_env(env.str('ENV_PATH', '.env'))
 
 EXECUTION_MODE = env.str('EXECUTION_MODE', default='WEB')
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY', default=')$2@4!+n(=0s638@2vb0mgv*msu#^(+v*b^)d6npn^9mz_d^it=xwmgmv0$uo%dhv^8doy2ppp+hfe')
 
-DEBUG = env.bool('DEBUG')
+DEBUG = env.bool('DEBUG', default=False)
 TEMPLATE_DEBUG = DEBUG
 
 CORS_ALLOWED_ORIGINS = env.list('ORIGINS')
@@ -93,7 +93,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "mrc.wsgi.application"
 
 DATABASES = {
-    'default': env.db_url('DATABASE_URL')
+    'default': env.db_url('DATABASE_URL', default='sqlite:////app/db/web.db')
 }
 
 
@@ -146,7 +146,7 @@ REST_AUTH = {
 }
 
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = env.str('ACCOUNT_EMAIL_VERIFICATION', default='mandatory') 
+ACCOUNT_EMAIL_VERIFICATION = env.str('ACCOUNT_EMAIL_VERIFICATION', default='none') 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
