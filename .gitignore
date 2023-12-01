@@ -9,5 +9,6 @@
 *.xlsx
 .idea/
 !.env.example
+!.env.web
 /website/static/website/css/
 !/db/web.db
