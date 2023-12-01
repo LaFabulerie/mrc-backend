@@ -92,8 +92,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "mrc.wsgi.application"
 
+DEFAULT_DATABASE_URL = 'sqlite:////app/db/web.db'
+if EXECUTION_MODE == 'STANDALONE':
+    DEFAULT_DATABASE_URL = 'sqlite:////app/db/standalone.db'
+
 DATABASES = {
-    'default': env.db_url('DATABASE_URL', default='sqlite:////app/db/web.db')
+    'default': env.db_url('DATABASE_URL', default=DEFAULT_DATABASE_URL)
 }
 
 
