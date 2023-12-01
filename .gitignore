@@ -10,3 +10,4 @@
 .idea/
 !.env.example
 /website/static/website/css/
+!/db/web.db
