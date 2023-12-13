@@ -1,0 +1,49 @@
+stages:
+  - build
+  - quality
+ 
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+ 
+build_test:
+  tags:
+    - kubernetes
+  stage: build
+  image: python:3.9-slim-bullseye
+ 
+  script:
+    - pip install -r requirements.txt
+  cache:
+    key:
+      files:
+        - requirements.txt
+    paths:
+      - .cache/pip
+ 
+  only:
+    - schedules
+    - merge_requests
+    - develop
+ 
+ 
+sonar_analysis:
+  tags:
+    - kubernetes
+  stage: quality
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+ 
+  script:
+    - sonar-scanner -D"sonar.host.url=${SONAR_SERVER}" -D"sonar.projectKey=MRC-Back-End" -Dsonar.sources=. -Dsonar.login=${SONAR_LOGIN} -Dsonar.login=$CI_SONAR_TOKEN
+ 
+  cache:
+    key:
+      files:
+        - requirements.txt
+    paths:
+      - .cache/pip
+ 
+  only:
+    - merge_requests
+    - develop
