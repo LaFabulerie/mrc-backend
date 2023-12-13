@@ -30,7 +30,7 @@ sonar_analysis:
     entrypoint: [""]
  
   script:
-    - sonar-scanner -D"sonar.host.url=${SONAR_SERVER}" -D"sonar.projectKey=MRC-Back-End" -Dsonar.sources=. -Dsonar.login=${SONAR_LOGIN} -Dsonar.login=$CI_SONAR_TOKEN
+    - sonar-scanner -D"sonar.host.url=$SONAR_HOST_URL" -D"sonar.projectKey=MRC-Back-End" -Dsonar.sources=. -Dsonar.login=${SONAR_LOGIN} -Dsonar.login=$CI_SONAR_TOKEN
  
   cache:
     key:
