@@ -19,12 +19,7 @@ build_test:
         - requirements.txt
     paths:
       - .cache/pip
- 
-  only:
-    - schedules
-    - merge_requests
-    - develop
- 
+
  
 sonar_analysis:
   tags:
@@ -43,7 +38,3 @@ sonar_analysis:
         - requirements.txt
     paths:
       - .cache/pip
- 
-  only:
-    - merge_requests
-    - develop
