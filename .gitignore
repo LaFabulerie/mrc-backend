@@ -1,6 +1,7 @@
 **/__pycache__
 *.rest
 *.env*
+venv/
 /data/.~lock*
 /db/*
 /media/
