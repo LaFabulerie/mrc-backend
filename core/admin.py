@@ -14,7 +14,7 @@ class ItemAdmin(admin.ModelAdmin):
         return os.path.exists(image_path)
     image_exits.boolean = True
     image_exits.short_description = 'Image ok ?'
-    
+
 
 
     list_display = ('uuid', 'name', 'slug', 'room', 'image_exits', 'light_ctrl', 'light_pin')
@@ -48,7 +48,7 @@ class RoomAdmin(admin.ModelAdmin):
     search_fields = ('name', 'uuid')
     list_editable = ('main_color', 'next_room')
     inlines = [ItemInline]
-    
+
 
 @admin.register(DigitalUse)
 class DigitalUseAdmin(admin.ModelAdmin):
@@ -56,17 +56,18 @@ class DigitalUseAdmin(admin.ModelAdmin):
     def items_list(self, obj):
         return ", ".join([i.name for i in obj.items.all()])
     items_list.short_description = 'Objets'
-    
+
     def tags_list(self, obj):
         return ";".join([t.name for t in obj.tags.all()])
     tags_list.short_description = 'Tags'
-    
+
     def service_count(self, obj):
         return obj.services.count()
     service_count.short_description = 'Nb services'
 
     list_display = ('title', 'uuid', 'tags_list', 'items_list', 'service_count')
     search_fields = ('title', 'uuid',)
+    list_filter = ('items__room',)
     filter_horizontal = ('items',)
 
 @admin.register(DigitalService)
@@ -79,7 +80,31 @@ class DigitalServiceAdmin(admin.ModelAdmin):
 
     list_display = ('title', 'uuid', 'use', 'items_list', 'scope')
     search_fields = ('title', 'uuid',)
-    
+    list_filter = ('use__items__room',)
+
+
+@admin.action(description="Valider les contributions sélectionnées")
+def validate_contribution(modeladmin, request, queryset):
+    """
+    Transformation de la contribution en service.
+    """
+    for obj in queryset:
+        obj.validate()
+
+
+@admin.register(Contribution)
+class ContributionAdmin(admin.ModelAdmin):
+
+    def tags_list(self, obj):
+        return ";".join([t.name for t in obj.tags.all()])
+    tags_list.short_description = 'Tags'
+
+    list_display = ('title', 'item', 'use', 'usage_title', 'tags_list')
+    search_fields = ('title', )
+    list_filter = ('item__room',)
+    actions = [validate_contribution]
+
+
 admin.site.unregister(Tag)
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):

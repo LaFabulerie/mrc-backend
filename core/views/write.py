@@ -1,8 +1,8 @@
 import csv
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin
-from core.models import DigitalUse, DigitalService, Item
-from core.serializers import DigitalUseSerializer, DigitalServiceSerializer
+from core.models import DigitalUse, DigitalService, Item, Contribution
+from core.serializers import DigitalUseSerializer, DigitalServiceSerializer, ContributionSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -37,6 +37,17 @@ class DigitalServiceWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyMode
     serializer_class = DigitalServiceSerializer
     permission_classes = [IsAuthenticated]
 
+class ContributionWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
+    queryset = Contribution.objects.all()
+    serializer_class = ContributionSerializer
+    permission_classes = [IsAuthenticated]
+
+    @action(detail=True, methods=['POST'])
+    def validate_contribution(self, request, pk=None):
+        contribution = self.get_object()
+        contribution.validate()
+
+        return Response({'message': 'Contribution validée.'})
 
 
 
@@ -72,7 +83,7 @@ def django_url_fetcher(url: str):
 
 class CartViewSet(GenericViewSet):
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
-    
+
     @action(detail=False, methods=['post'])
     def email(self, request, format=None):
         email = request.data.get('email', None)
@@ -91,7 +102,7 @@ class CartViewSet(GenericViewSet):
                                      settings.DEFAULT_FROM_EMAIL,
                                      [email])
         msg.attach_alternative(html_mail, "text/html")
-        
+
         host = Site.objects.get_current().domain
 
         context = {
@@ -100,7 +111,7 @@ class CartViewSet(GenericViewSet):
         }
 
         html_content = render_to_string("cart/pdf.html", context)
-        
+
         pdf_content = HTML(
             string=html_content,
             base_url="not-used://",
@@ -131,7 +142,7 @@ class CartViewSet(GenericViewSet):
         response['Content-Disposition'] = f"attachment; filename=services.pdf"
 
         html_content = render_to_string("cart/pdf.html", context)
-        
+
         HTML(
             string=html_content,
             base_url="not-used://",
@@ -142,10 +153,10 @@ class CartViewSet(GenericViewSet):
         )
 
         return response
-    
+
 class ImportDigitalServiceApiView(APIView):
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
     def post(self, request, format=None):
         file = request.FILES['import[]']
         return import_services(file.read().decode('utf-8').splitlines())
-        
+

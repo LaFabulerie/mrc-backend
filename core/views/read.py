@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from taggit.models import Tag
-from core.models import Room, DigitalUse, DigitalService, Item
-from core.serializers import RoomSerializer, DigitalUseSerializer, DigitalServiceSerializer, ItemSerializer
+from core.models import Room, DigitalUse, DigitalService, Item, Contribution
+from core.serializers import RoomSerializer, DigitalUseSerializer, DigitalServiceSerializer, ItemSerializer, ContributionSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from core.permissions import IsLocalAccess
@@ -26,7 +26,7 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
             if room.slug == "jardin":
                 return True
         return False
-        
+
 
     @action(detail=False, methods=['get'])
     def distance(self, request):
@@ -44,7 +44,7 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
 
         if from_room_uuid == to_room_uuid:
             return Response(resp)
-        
+
         fw_path = []
         bw_path = []
 
@@ -54,7 +54,7 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
             current_room = current_room.previous_room.first()
         fw_path.pop(0)
         fw_path.append(end_room)
-        
+
         current_room = start_room
         while current_room.uuid != end_room.uuid:
             bw_path.append(current_room)
@@ -68,14 +68,14 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
 
         if not self.crossed_garden(fw_path):
             d1 = len(fw_path)
-        
+
         if not self.crossed_garden(bw_path):
             d2 = -len(bw_path)
 
         resp['distance'] = d1 if abs(d1) < abs(d2) else d2
 
         return Response(resp)
-    
+
 
 
 class ItemReadOnlyViewSet(ReadOnlyModelViewSet):
@@ -94,6 +94,11 @@ class DigitalUseReadOnlyViewSet(ReadOnlyModelViewSet):
 class DigitalServiceReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = DigitalService.objects.all()
     serializer_class = DigitalServiceSerializer
+    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+
+class ContributionReadOnlyViewSet(ReadOnlyModelViewSet):
+    queryset = Contribution.objects.all()
+    serializer_class = ContributionSerializer
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
 
 class TagApiView(APIView):

@@ -24,7 +24,7 @@ class Room(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         verbose_name = 'Pièce'
 
@@ -70,10 +70,10 @@ class Item(models.Model):
 
     def __str__(self):
         return f"{self.room.name} - {self.name}"
-    
+
     class Meta:
         verbose_name = 'Objet'
-        
+
 @receiver(pre_save, sender=Item)
 def rename_image_file(sender, instance, **kwargs):
     old_instance = Item.objects.filter(id=instance.id).first()
@@ -93,14 +93,14 @@ class DigitalUse(models.Model):
     description = models.TextField(blank=True, null=True)
     items = models.ManyToManyField(Item, blank=True, related_name='uses')
     tags = TaggableManager(blank=True)
-    
+
     def __str__(self):
         return f"[{','.join([item.room.name +' - '+item.name for item in self.items.all()])}] {self.title}"
 
     class Meta:
         verbose_name = 'Usage numérique'
         verbose_name_plural = 'Usages numériques'
-    
+
 
 class DigitalService(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -114,7 +114,52 @@ class DigitalService(models.Model):
 
     def __str__(self):
         return self.title
-  
+
     class Meta:
         verbose_name = 'Service numérique'
         verbose_name_plural = 'Services numériques'
+
+
+class Contribution(models.Model):
+    item = models.ForeignKey(Item, blank=True, null=True, on_delete=models.CASCADE, related_name='contributions')
+    use = models.ForeignKey(DigitalUse, blank=True, null=True, on_delete=models.CASCADE, related_name='contributions')
+    usage_title = models.CharField(max_length=500, blank=True, null=True)
+    title = models.CharField(max_length=500)
+    description = models.TextField(blank=True, null=True)
+    url = models.CharField(max_length=500)
+    scope = models.CharField(max_length=500)
+    contact = models.TextField(blank=True, null=True)
+    tags = TaggableManager(blank=True)
+
+    def __str__(self):
+        if self.use is not None:
+            return f"{self.use.title} - {self.title}"
+        return f"{self.usage_title} - {self.title}"
+
+    def validate(self):
+        # Création d'un nouvel usage
+        if self.usage_title is not None and self.usage_title != "":
+            use = DigitalUse.objects.create(
+                title=self.usage_title,
+                description="",
+            )
+            use.items.add(self.item)
+        else:
+            use = self.use
+
+        # Création du service
+        DigitalService.objects.create(
+            title=self.title,
+            description=self.description,
+            url=self.url,
+            scope=self.scope,
+            use=use,
+            contact=self.contact,
+        )
+
+        # Suppression de la contribution
+        self.delete()
+
+    class Meta:
+        verbose_name = 'Contribution'
+        verbose_name_plural = 'Contributions'
