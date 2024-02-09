@@ -129,7 +129,7 @@ class Contribution(models.Model):
     url = models.CharField(max_length=500)
     scope = models.CharField(max_length=500)
     contact = models.TextField(blank=True, null=True)
-    tags = TaggableManager(blank=True)
+    tags = models.TextField(blank=True, null=True)
 
     def __str__(self):
         if self.use is not None:
@@ -146,6 +146,10 @@ class Contribution(models.Model):
             use.items.add(self.item)
         else:
             use = self.use
+
+        # Gestion des tags
+        for tag in self.tags.split(","):
+            use.tags.add(tag.strip())
 
         # Création du service
         DigitalService.objects.create(

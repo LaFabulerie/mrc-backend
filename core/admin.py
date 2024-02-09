@@ -95,11 +95,7 @@ def validate_contribution(modeladmin, request, queryset):
 @admin.register(Contribution)
 class ContributionAdmin(admin.ModelAdmin):
 
-    def tags_list(self, obj):
-        return ";".join([t.name for t in obj.tags.all()])
-    tags_list.short_description = 'Tags'
-
-    list_display = ('title', 'item', 'use', 'usage_title', 'tags_list')
+    list_display = ('title', 'item', 'use', 'usage_title', 'tags')
     search_fields = ('title', )
     list_filter = ('item__room',)
     actions = [validate_contribution]
