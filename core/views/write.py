@@ -154,6 +154,24 @@ class CartViewSet(GenericViewSet):
 
         return response
 
+
+    @action(detail=False, methods=['post'])
+    def print(self, request):
+        cart = request.data.get('basket', {})
+        service_uuids = [s['uuid'] for s in cart]
+        if len(service_uuids) == 0:
+            return Response({'status': 'error', 'message': 'Cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # TODO : imprimer cette liste via l'imprimante USB
+        print("Liste de vos services")
+        print("numériques\n")
+        for service in DigitalService.objects.filter(uuid__in=service_uuids):
+            print(f"{service.title}")
+            print(f"{service.url}\n")
+
+        return Response({'status': 'ok'}, status=status.HTTP_200_OK)
+
+
 class ImportDigitalServiceApiView(APIView):
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
     def post(self, request, format=None):
