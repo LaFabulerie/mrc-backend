@@ -18,3 +18,5 @@ pandas[excel]~=2.0.3
 paho-mqtt
 django-anymail
 weasyprint
+pyusb
+python-escpos

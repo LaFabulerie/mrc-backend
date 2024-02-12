@@ -22,6 +22,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.staticfiles import finders
 from weasyprint import default_url_fetcher
 from core.import_export import import_services
+from escpos.printer import Usb
 
 
 class DigitalUseWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
@@ -162,12 +163,23 @@ class CartViewSet(GenericViewSet):
         if len(service_uuids) == 0:
             return Response({'status': 'error', 'message': 'Cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # TODO : imprimer cette liste via l'imprimante USB
-        print("Liste de vos services")
-        print("numériques\n")
-        for service in DigitalService.objects.filter(uuid__in=service_uuids):
-            print(f"{service.title}")
-            print(f"{service.url}\n")
+        try:
+            printer = Usb(settings.PRINTER_VENDOR_ID, settings.PRINTER_PRODUCT_ID, profile="TM-L90")
+            printer.image("core/static/core/printer_mrc.png", center=True)
+            printer.set(align="center", font="a", width=2, height=2, custom_size=True)
+            printer.text("Liste de vos services\n")
+            printer.text("numériques\n\n")
+            for service in DigitalService.objects.filter(uuid__in=service_uuids):
+                printer.set(align="left", font="a", width=2, height=2, custom_size=True)
+                printer.text(f"{service.title}\n")
+                printer.set(align="left", font="a", width=1, height=1, custom_size=True)
+                printer.text(f"{service.url}\n")
+                printer.qr(service.url, size=5)
+                printer.text("\n")
+            printer.cut()
+            printer.close()
+        except Exception:
+            return Response({'status': 'error', 'message': 'Printer error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         return Response({'status': 'ok'}, status=status.HTTP_200_OK)
 

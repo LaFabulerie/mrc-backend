@@ -29,10 +29,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'django.contrib.sites',
-    
+
     "django_extensions",
     "corsheaders",
-    
+
     'drf_yasg',
 
     "anymail",
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 
     'django_filters',
     "taggit",
-     
+
     'org',
     'core',
     'feedback',
@@ -136,7 +136,7 @@ REST_FRAMEWORK = {
         'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
     ),
-    
+
 }
 
 REST_AUTH = {
@@ -150,7 +150,7 @@ REST_AUTH = {
 }
 
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = env.str('ACCOUNT_EMAIL_VERIFICATION', default='none') 
+ACCOUNT_EMAIL_VERIFICATION = env.str('ACCOUNT_EMAIL_VERIFICATION', default='none')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -178,3 +178,6 @@ if EXECUTION_MODE == 'WEB':
 else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     DEFAULT_FROM_EMAIL = 'no-reply@localhost'
+
+PRINTER_VENDOR_ID = int(env.str("PRINTER_VENDOR_ID", default="0"), 16)
+PRINTER_PRODUCT_ID = int(env.str("PRINTER_PRODUCT_ID", default="0"), 16)
