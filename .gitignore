@@ -11,5 +11,6 @@ venv/
 .idea/
 !.env.example
 !.env.web
+!.env.standalone
 /website/static/website/css/
 !/db/web.db
