@@ -18,7 +18,7 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
-RUN ./manage.py collectstatic --no-input
+RUN python manage.py collectstatic --no-input
 
 RUN apt-get clean all && rm -rf /var/apt/lists/* && rm -rf /var/cache/apt/*
 
