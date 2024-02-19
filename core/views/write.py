@@ -41,7 +41,7 @@ class DigitalServiceWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyMode
 class ContributionWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = Contribution.objects.all()
     serializer_class = ContributionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = []
 
     @action(detail=True, methods=['POST'])
     def validate_contribution(self, request, pk=None):
