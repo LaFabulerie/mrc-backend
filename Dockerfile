@@ -19,6 +19,7 @@ RUN pip install -r requirements.txt
 RUN pip install gunicorn
 
 RUN python manage.py collectstatic --no-input
+RUN chmod +x /app/start.sh
 
 RUN apt-get clean all && rm -rf /var/apt/lists/* && rm -rf /var/cache/apt/*
 
