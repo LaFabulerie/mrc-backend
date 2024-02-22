@@ -148,8 +148,9 @@ class Contribution(models.Model):
             use = self.use
 
         # Gestion des tags
-        for tag in self.tags.split(","):
-            use.tags.add(tag.strip())
+        if self.tags is not None:
+            for tag in self.tags.split(","):
+                use.tags.add(tag.strip())
 
         # Création du service
         DigitalService.objects.create(
