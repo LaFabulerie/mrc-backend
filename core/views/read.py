@@ -18,7 +18,7 @@ from core.import_export import export_services
 class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated| AllowAny]
+    permission_classes = [AllowAny]
     lookup_field = 'uuid'
 
     def crossed_garden(self, path):
@@ -81,20 +81,20 @@ class RoomReadOnlyViewSet(ReadOnlyModelViewSet):
 class ItemReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
-    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+    permission_classes = [AllowAny]
     lookup_field = 'uuid'
 
 
 class DigitalUseReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = DigitalUse.objects.all()
     serializer_class = DigitalUseSerializer
-    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+    permission_classes = [AllowAny]
     lookup_field = 'uuid'
 
 class DigitalServiceReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = DigitalService.objects.all()
     serializer_class = DigitalServiceSerializer
-    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+    permission_classes = [AllowAny]
 
 class ContributionReadOnlyViewSet(ReadOnlyModelViewSet):
     queryset = Contribution.objects.all()
@@ -102,7 +102,7 @@ class ContributionReadOnlyViewSet(ReadOnlyModelViewSet):
     permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
 
 class TagApiView(APIView):
-    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+    permission_classes = [AllowAny]
     def get(self, request, format=None):
         tags = Tag.objects.exclude(name="").values_list('name', flat=True)
         return Response(tags)
