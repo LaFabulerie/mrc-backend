@@ -8,7 +8,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV LANG C.UTF-8
 
 RUN apt-get update -qq && apt-get install -y -qq \
-    procps curl libpq-dev git binutils nano python3-pip python3-cffi python3-brotli libpango-1.0-0 libpangoft2-1.0-0
+    procps curl libpq-dev git binutils nano python3-pip python3-cffi python3-brotli \
+    libpango-1.0-0 libpangoft2-1.0-0 libusb-1.0-0-dev
 
 RUN /usr/local/bin/python -m pip install --upgrade pip
 
