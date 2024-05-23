@@ -130,6 +130,7 @@ class Contribution(models.Model):
     url = models.CharField(max_length=500)
     scope = models.CharField(max_length=500)
     contact = models.TextField(blank=True, null=True)
+    commune = models.CharField(max_length=500, null=True)
     tags = models.TextField(blank=True, null=True)
 
     def __str__(self):
