@@ -111,6 +111,7 @@ class DigitalService(models.Model):
     scope = models.CharField(max_length=500, blank=True, null=True)
     use = models.ForeignKey(DigitalUse, blank=True, null=True, on_delete=models.CASCADE, related_name='services')
     contact = models.TextField(blank=True, null=True)
+    ordre = models.IntegerField(default=1)
 
     def __str__(self):
         return self.title
