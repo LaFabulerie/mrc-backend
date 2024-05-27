@@ -28,6 +28,7 @@
             {{ service.description|safe }}
           </div>
           <span class="font-bold" style="word-wrap: break-word;"><i class="pi pi-globe mr-2"></i>{{service.url}}</span>
+          {% if service.contact %}<span class="font-bold" style="word-wrap: break-word;"><i class="pi pi-envelope mr-2"></i>{{service.contact}}</span>{%endif%}
         </div>
 {% endfor %}
         </div>

@@ -28,7 +28,7 @@ from escpos.printer import Usb
 class DigitalUseWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = DigitalUse.objects.all()
     serializer_class = DigitalUseSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = []
     lookup_url_kwarg = 'uuid'
     lookup_field = 'uuid'
 
@@ -36,7 +36,7 @@ class DigitalUseWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMix
 class DigitalServiceWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = DigitalService.objects.all()
     serializer_class = DigitalServiceSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = []
 
 class ContributionWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
     queryset = Contribution.objects.all()
@@ -83,7 +83,7 @@ def django_url_fetcher(url: str):
     return default_url_fetcher(url)
 
 class CartViewSet(GenericViewSet):
-    permission_classes = [IsLocalAccess | HasOrganizationAPIKey | IsAuthenticated]
+    permission_classes = []
 
     @action(detail=False, methods=['post'])
     def email(self, request, format=None):
