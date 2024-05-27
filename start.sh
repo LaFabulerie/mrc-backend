@@ -2,7 +2,8 @@
 
 python /app/manage.py migrate
 
-python /app/manage.py import
+# No automatic import
+# python /app/manage.py import
 
 python /app/manage.py collectstatic --noinput
 
