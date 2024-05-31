@@ -23,6 +23,7 @@ from django.contrib.staticfiles import finders
 from weasyprint import default_url_fetcher
 from core.import_export import import_services
 from escpos.printer import Usb
+from parameters.models import get_parameter
 
 
 class DigitalUseWriteViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
@@ -172,8 +173,9 @@ class CartViewSet(GenericViewSet):
             for service in DigitalService.objects.filter(uuid__in=service_uuids):
                 printer.set(align="left", font="a", width=2, height=2, custom_size=True)
                 printer.text(f"{service.title}\n")
-                printer.set(align="left", font="a", width=1, height=1, custom_size=True)
-                printer.text(f"{service.url}\n")
+                if get_parameter("Impression tickets"):
+                    printer.set(align="left", font="a", width=1, height=1, custom_size=True)
+                    printer.text(f"{service.url}\n")
                 printer.qr(service.url, size=5)
                 printer.text("\n")
             printer.cut()

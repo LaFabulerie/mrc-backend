@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'org',
     'core',
     'feedback',
+    'parameters',
 ]
 
 SITE_ID = 1
