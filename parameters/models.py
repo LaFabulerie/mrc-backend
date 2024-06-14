@@ -4,12 +4,12 @@ from django.db import models
 
 
 class Parameter(models.Model):
-    PARAMETER_CATEGORY = {
-        "B": "Booléen",
-        "I": "Entier",
-        "S": "Chaine de caractères",
-        "D": "Décimal",
-    }
+    PARAMETER_CATEGORY = (
+        ("B", "Booléen"),
+        ("I", "Entier"),
+        ("S", "Chaine de caractères"),
+        ("D", "Décimal"),
+    )
 
     name = models.CharField(max_length=500)
     slug = AutoSlugField(populate_from="name", unique=True, always_update=True)
