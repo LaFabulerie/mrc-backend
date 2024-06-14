@@ -42,7 +42,7 @@ def rename_video_file(sender, instance, **kwargs):
 
 
 class Item(models.Model):
-    uuid = models.UUIDField(default=uuid.uuid4, editable = False, unique=True)
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     name = models.CharField(verbose_name="Nom", max_length=500)
     slug = AutoSlugField(populate_from='name', unique=True, always_update=True)
     image = models.CharField(max_length=500, blank=True, null=True, editable=False)
