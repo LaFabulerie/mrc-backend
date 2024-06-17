@@ -170,15 +170,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'org.User'
 
+DEFAULT_FROM_EMAIL = 'ne-pas-repondre@lamaisonreconnectee.fr'
 if EXECUTION_MODE == 'WEB':
-    EMAIL_BACKEND = "anymail.backends.sendinblue.EmailBackend"
-    DEFAULT_FROM_EMAIL = "ne-pas-repondre@maison-reconnectee.fr"
+    EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
     ANYMAIL = {
-        "SENDINBLUE_API_KEY": env.str('SENDINBLUE_API_KEY'),
+        "BREVO_API_KEY": env.str('BREVO_API_KEY', default=''),
     }
 else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-    DEFAULT_FROM_EMAIL = 'no-reply@localhost'
 
 PRINTER_VENDOR_ID = int(env.str("PRINTER_VENDOR_ID", default="0"), 16)
 PRINTER_PRODUCT_ID = int(env.str("PRINTER_PRODUCT_ID", default="0"), 16)
