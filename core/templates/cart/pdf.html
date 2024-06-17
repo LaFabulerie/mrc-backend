@@ -9,6 +9,13 @@
     size: a4 portrait;
     margin: 20px 10px;
   }
+  div > p {
+      display: inline;
+  }
+  span.font-bold > p {
+      display: inline;
+      font-weight: bold;
+  }
 </style>
 </head>
 <body>
@@ -28,7 +35,7 @@
             {{ service.description|safe }}
           </div>
           <span class="font-bold" style="word-wrap: break-word;"><i class="pi pi-globe mr-2"></i>{{service.url}}</span>
-          {% if service.contact %}<span class="font-bold" style="word-wrap: break-word;"><i class="pi pi-envelope mr-2"></i>{{service.contact}}</span>{%endif%}
+          {% if service.contact %}<span class="font-bold" style="display: inline"><i class="pi pi-envelope mr-2"></i>{{service.contact|safe}}</span>{%endif%}
         </div>
 {% endfor %}
         </div>
